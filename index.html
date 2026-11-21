@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alex Miramontes Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="I'm a third-year mechanical engineering student at Harvard College, Class of 2028. I design, analyze, and build mechanical and electromechanical systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+<style>
+/* Layout: light, single-theme engineering portfolio. 1180px wrap, sticky header, two-column hero, 2-up project cards, tinted experience band. */
+:root {
+  --ink: #17212e;
+  --muted: #596574;
+  --line: #dce2e8;
+  --soft: #f3f5f7;
+  --blue: #174d9e;
+  --blue-soft: #eaf1fb;
+  --white: #ffffff;
+  --draw: #3a4656;
+  --wrap: 1180px;
+  --radius: 8px;
+  --font: Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--white); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--white); }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; font-weight: 650; text-wrap: balance; color: var(--ink); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 3px; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 16px; top: 16px; z-index: 60; background: var(--ink); color: var(--white); padding: 8px 12px; }
+
+.wrap {
+  max-width: var(--wrap); margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 760px) {
+  .wrap { padding-left: max(64px, env(safe-area-inset-left, 0px)); padding-right: max(64px, env(safe-area-inset-right, 0px)); }
+}
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--white); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
+.brand { font-weight: 650; font-size: 17px; letter-spacing: -0.03em; }
+.dot { color: var(--blue); }
+.nav { display: flex; align-items: center; gap: 25px; font-size: 14px; font-weight: 500; }
+.nav a { padding: 6px 0; border-bottom: 2px solid transparent; }
+.nav a:hover { color: var(--blue); }
+.nav a[aria-current="page"] { color: var(--blue); border-bottom-color: var(--blue); }
+.nav a.resume { border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin-left: 4px; }
+.nav a.resume:hover { border-color: var(--ink); color: var(--ink); }
+.menu-btn { display: none; font: inherit; font-size: 14px; font-weight: 500; background: none; border: 0; color: var(--ink); cursor: pointer; padding: 8px 0; }
+@media (max-width: 760px) {
+  .menu-btn { display: block; }
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--white); border-bottom: 1px solid var(--line);
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 4px 16px; }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .nav a[aria-current="page"] { border-bottom-color: var(--line); }
+  .nav a.resume { border: 0; border-radius: 0; margin: 0; padding: 12px 0; }
+}
+
+/* ---------- Shared type ---------- */
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+.lead { font-size: 18px; line-height: 1.65; color: var(--muted); max-width: 33em; }
+.muted { color: var(--muted); }
+.arrow { font-size: 0.9em; }
+.ulink { font-weight: 600; font-size: 15px; border-bottom: 1.5px solid var(--ink); padding-bottom: 3px; }
+.ulink:hover { color: var(--blue); border-color: var(--blue); }
+.btn { display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; padding: 12px 18px; border-radius: 4px; border: 1px solid var(--ink); background: var(--white); color: var(--ink); }
+.btn.dark { background: var(--ink); color: var(--white); }
+.btn.dark:hover { background: var(--blue); border-color: var(--blue); }
+.btn:not(.dark):hover { border-color: var(--blue); color: var(--blue); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.social { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13px; font-weight: 500; }
+.social a:hover { color: var(--blue); }
+
+/* ---------- Hero ---------- */
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 72px; align-items: center; padding-block: 72px 80px; }
+.hero > * { min-width: 0; }
+.hero-copy { display: grid; gap: 26px; }
+.hero h1 { font-size: clamp(52px, 7.2vw, 83px); line-height: 1.03; letter-spacing: -0.055em; }
+.hero figure { margin: 0; display: grid; gap: 12px; }
+.hero-img { background: var(--soft); border-radius: var(--radius); overflow: hidden; aspect-ratio: 8 / 7; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+.cap-row { display: flex; justify-content: space-between; gap: 16px; font-size: 12px; color: var(--muted); }
+.cap-row a { color: var(--ink); font-weight: 500; }
+.cap-row a:hover { color: var(--blue); }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 48px 56px; } }
+
+/* ---------- Sections ---------- */
+.section { padding-block: 56px 88px; border-top: 1px solid var(--line); }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+.sec-head > div { display: grid; gap: 10px; }
+.sec-head h2 { font-size: clamp(30px, 4vw, 38px); line-height: 1.15; letter-spacing: -0.035em; }
+
+/* ---------- Project cards ---------- */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 30px; }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr; gap: 44px; } }
+.card { display: grid; gap: 16px; align-content: start; }
+.card .media { aspect-ratio: 509 / 350; }
+.media { background: var(--soft); border-radius: var(--radius); overflow: hidden; display: grid; place-items: center; padding: 10px; color: var(--draw); }
+.media { position: relative; }
+.media img, .media svg { position: absolute; inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px); object-fit: contain; }
+.media.cover { padding: 0; }
+.media.cover img { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lead-fig .media img, .lead-fig .media svg { inset: 18px; width: calc(100% - 36px); height: calc(100% - 36px); }
+.photo .media img { inset: 6px; width: calc(100% - 12px); height: calc(100% - 12px); }
+.card:hover .media { box-shadow: inset 0 0 0 1px var(--line); }
+.meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 12px; font-weight: 500; color: var(--muted); }
+.meta .right { display: flex; align-items: center; gap: 10px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; background: var(--blue-soft); color: var(--blue); font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+.pill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.title-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+.card h3 { font-size: clamp(20px, 2.2vw, 24px); line-height: 1.25; letter-spacing: -0.03em; }
+.card .title-row .arrow { font-size: 20px; line-height: 1.2; }
+.card:hover h3, .card:hover .title-row .arrow { color: var(--blue); }
+.card p { color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 34em; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+.filters button { font: inherit; font-size: 13px; font-weight: 500; color: var(--muted); background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.filters button:hover { color: var(--ink); border-color: var(--ink); }
+.filters button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
+
+/* ---------- Experience band ---------- */
+.band { background: var(--soft); }
+.band-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding-block: 72px 80px; }
+.band-inner > * { min-width: 0; }
+.band-copy { display: grid; gap: 20px; align-content: start; }
+.band-copy h2 { font-size: clamp(30px, 4vw, 38px); line-height: 1.15; letter-spacing: -0.035em; }
+.band-copy .lead { font-size: 16px; }
+.xrows { border-top: 0; }
+.xrow { display: grid; grid-template-columns: 1fr auto auto; gap: 4px 18px; align-items: center; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.xrow:first-child { padding-top: 0; }
+.xrow b { font-weight: 650; font-size: 16px; letter-spacing: -0.01em; display: block; }
+.xrow span.role { font-size: 13px; color: var(--muted); }
+.xrow .when { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.xrow:hover b, .xrow:hover .arrow { color: var(--blue); }
+@media (max-width: 900px) { .band-inner { grid-template-columns: 1fr; gap: 40px; padding-block: 56px; } }
+@media (max-width: 480px) { .xrow { grid-template-columns: 1fr auto; } .xrow .when { grid-column: 1; grid-row: 2; } }
+
+/* ---------- Contact strip ---------- */
+.touch { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding-block: 64px; }
+.touch h2 { font-size: clamp(28px, 3.6vw, 34px); letter-spacing: -0.035em; }
+.touch p { color: var(--muted); font-size: 15px; margin-top: 8px; }
+.email-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.email { font-weight: 600; font-size: 15px; border-bottom: 1.5px solid var(--ink); padding-bottom: 3px; word-break: break-all; }
+.email:hover { color: var(--blue); border-color: var(--blue); }
+.copy { font: inherit; font-size: 12px; font-weight: 500; color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 4px; padding: 4px 9px; cursor: pointer; }
+.copy:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--line); }
+.foot-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding-block: 36px 24px; border-bottom: 1px solid var(--line); }
+.foot-top b { display: block; font-weight: 650; font-size: 15px; }
+.foot-top small { font-size: 12px; color: var(--muted); }
+.foot-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; font-weight: 500; }
+.foot-links a:hover, .foot-bottom a:hover { color: var(--blue); }
+.foot-bottom { display: flex; justify-content: space-between; gap: 16px; padding-block: 18px 32px; font-size: 11px; color: var(--muted); }
+
+/* ---------- Subpage heads ---------- */
+.page-head { padding-block: 64px 48px; display: grid; gap: 18px; }
+.page-head h1 { font-size: clamp(44px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.05em; }
+.crumb { font-size: 12px; color: var(--muted); padding-top: 28px; }
+.crumb a { color: var(--ink); font-weight: 500; }
+.crumb a:hover { color: var(--blue); }
+.crumb span { margin-inline: 8px; }
+
+/* ---------- Project detail ---------- */
+.p-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 40px 56px; }
+.p-hero > * { min-width: 0; }
+.p-hero .copy-col { display: grid; gap: 22px; }
+.p-hero h1 { font-size: clamp(38px, 5vw, 52px); line-height: 1.08; letter-spacing: -0.045em; }
+.p-hero .lead { font-size: 17px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; margin: 0; }
+.facts dt { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.facts dd { margin: 0; font-size: 13px; line-height: 1.5; }
+.jumps { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; font-weight: 600; color: var(--blue); }
+.jumps button { font: inherit; color: inherit; background: none; border: 0; padding: 0 0 3px; border-bottom: 1px solid currentColor; cursor: pointer; }
+.lead-fig { margin: 0; background: var(--soft); border-radius: var(--radius); overflow: hidden; display: grid; }
+.lead-fig .media { aspect-ratio: 5 / 4; border-radius: 0; padding: 18px; }
+.lead-fig figcaption { font-size: 12px; color: var(--muted); padding: 0 18px 14px; }
+@media (max-width: 900px) { .p-hero { grid-template-columns: 1fr; gap: 36px; } }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stat { padding: 22px 24px 22px 0; display: grid; gap: 4px; }
+.stat + .stat { border-left: 1px solid var(--line); padding-left: 24px; }
+.stat b { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; color: var(--muted); }
+@media (max-width: 600px) { .stat + .stat { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; } }
+
+.p-body { display: grid; grid-template-columns: 210px 1fr; gap: 120px; padding-block: 72px 40px; }
+.p-body > * { min-width: 0; }
+.side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 104px); align-self: start; display: grid; gap: 24px; }
+.side .label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.toc { display: grid; gap: 10px; }
+.toc button { font: inherit; font-size: 12px; line-height: 1.45; text-align: left; color: var(--ink); background: none; border: 0; padding: 0; cursor: pointer; }
+.toc button:hover { color: var(--blue); }
+.side .tools { font-size: 12px; color: var(--muted); line-height: 1.6; padding-top: 22px; border-top: 1px solid var(--line); }
+.prose { display: grid; gap: 52px; max-width: 660px; }
+.prose section { display: grid; gap: 18px; scroll-margin-top: 100px; }
+.prose h2 { font-size: 26px; letter-spacing: -0.035em; line-height: 1.2; }
+.prose p { font-size: 16px; line-height: 1.75; color: var(--muted); }
+.prose p strong { color: var(--ink); font-weight: 600; }
+.prose ul { margin: 0; padding-left: 1.15em; display: grid; gap: 8px; color: var(--muted); line-height: 1.7; }
+.prose li::marker { color: var(--blue); }
+.eq { font-family: "Cambria Math", "STIX Two Math", Georgia, serif; font-size: 18px; color: var(--ink); background: var(--soft); border-radius: 6px; padding: 14px 18px; overflow-x: auto; white-space: nowrap; }
+.eq sub { font-size: 0.7em; }
+@media (max-width: 900px) { .p-body { grid-template-columns: 1fr; gap: 32px; padding-block: 48px 24px; } .side { position: static; } }
+
+.photos { padding-block: 56px 72px; border-top: 1px solid var(--line); }
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 28px 20px; }
+.photo { display: grid; gap: 10px; text-align: left; font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: zoom-in; }
+.photo .media { aspect-ratio: 4 / 3; padding: 6px; }
+.photo:hover .media { box-shadow: inset 0 0 0 1px var(--line); }
+.photo span { font-size: 12px; font-style: italic; color: var(--muted); line-height: 1.5; }
+
+/* ---------- Lightbox ---------- */
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(15, 20, 28, 0.92); display: grid; grid-template-rows: auto 1fr auto; padding: calc(env(safe-area-inset-top, 0px) + 14px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 18px) max(16px, env(safe-area-inset-left, 0px)); color: var(--white); }
+.lb-top { display: flex; justify-content: flex-end; gap: 10px; }
+.lb-top button, .lb-nav button { font: inherit; font-size: 13px; font-weight: 500; color: var(--white); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px; padding: 7px 12px; cursor: pointer; }
+.lb-top button:hover, .lb-nav button:hover { background: rgba(255,255,255,0.18); }
+.lb-stage { display: grid; place-items: center; min-height: 0; padding-block: 12px; }
+.lb-stage img { max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px; background: var(--white); }
+.lb-nav { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.lb-nav p { font-size: 13px; font-style: italic; text-align: center; color: #d9dee5; }
+
+/* ---------- Experience page ---------- */
+.xlist { display: grid; }
+.xitem { display: grid; grid-template-columns: 240px 1fr; gap: 48px; padding-block: 36px; border-top: 1px solid var(--line); }
+.xitem > * { min-width: 0; }
+.xitem .when { font-size: 13px; color: var(--muted); display: grid; gap: 2px; align-content: start; }
+.xitem .when b { color: var(--ink); font-weight: 600; }
+.xitem .body { display: grid; gap: 12px; max-width: 660px; }
+.xitem h3 { font-size: 22px; letter-spacing: -0.03em; }
+.xitem .org { font-size: 14px; color: var(--blue); font-weight: 600; }
+.xitem p { color: var(--muted); line-height: 1.7; }
+.xitem ul { margin: 0; padding-left: 1.15em; display: grid; gap: 8px; color: var(--muted); line-height: 1.65; }
+.xitem li::marker { color: var(--blue); }
+@media (max-width: 760px) { .xitem { grid-template-columns: 1fr; gap: 10px; } }
+
+/* ---------- About ---------- */
+.about { display: grid; grid-template-columns: 1.25fr 1fr; gap: 96px; padding-bottom: 88px; }
+.about > * { min-width: 0; }
+.about .prose { gap: 22px; }
+.facts-col { display: grid; gap: 30px; align-content: start; }
+.facts-col h3 { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.facts-col ul { margin: 0; padding: 0; list-style: none; display: grid; }
+.facts-col li { font-size: 14px; padding-block: 9px; border-bottom: 1px solid var(--line); line-height: 1.5; }
+.facts-col li:first-child { border-top: 1px solid var(--line); }
+.facts-col li small { display: block; color: var(--muted); font-size: 12px; }
+@media (max-width: 900px) { .about { grid-template-columns: 1fr; gap: 48px; } }
+
+main { min-height: 60vh; }
+</style>
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#">Alex Miramontes<span class="dot">.</span></a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu +</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#experience" data-nav="experience">Experience</a>
+      <a href="#about" data-nav="about">About</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+      <a class="resume" href="assets/downloads/Alex-Miramontes-Resume.pdf" target="_blank" rel="noopener">Résumé ↓</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <div><b>Alex Miramontes</b><small>Mechanical engineering · Harvard College ’28</small></div>
+      <div class="foot-links">
+        <a href="#contact">Email</a>
+        <a href="https://www.linkedin.com/in/alex-miramontes-rodriguez" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="assets/downloads/Alex-Miramontes-Resume.pdf" target="_blank" rel="noopener">Résumé</a>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Alejandro Miramontes Rodriguez</span><a href="#top" id="to-top">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="lb-top"><button type="button" id="lb-close">Close ✕</button></div>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-nav"><button type="button" id="lb-prev">← Previous</button><p id="lb-cap"></p><button type="button" id="lb-next">Next →</button></div>
+</div>
+
+<script>
+// ================= Links =================
+const EMAIL = "amiramontesrodriguez@college.harvard.edu";
+const LINKEDIN = "https://www.linkedin.com/in/alex-miramontes-rodriguez";
+const RESUME = "assets/downloads/Alex-Miramontes-Resume.pdf";
+const IMG = "assets/projects/";
+
+// ================= Drawings for projects without photos =================
+// These are clean line drawings. To swap in a real photo, set `cover` on the project.
+const DRAW = {
+  bridge: `<svg viewBox="0 0 500 340" role="img" aria-label="Line drawing of a truss bridge in a load-test fixture">
+    <defs><linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#174d9e" stop-opacity=".25"/><stop offset=".5" stop-color="#174d9e"/><stop offset="1" stop-color="#174d9e" stop-opacity=".25"/></linearGradient></defs>
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M70 230 H430"/><path d="M110 140 H390"/>
+      <path d="M70 230 L110 140 L150 230 L190 140 M310 140 L350 230 L390 140 L430 230"/>
+      <path d="M58 230 v42 h34 v-42 M408 230 v42 h34 v-42" stroke-width="1.5"/>
+      <path d="M40 272 H460" stroke-width="1.5" opacity=".6"/>
+    </g>
+    <g fill="none" stroke="url(#st)" stroke-width="4" stroke-linecap="round"><path d="M190 140 L230 230 L270 140 L310 230 L310 140"/><path d="M150 230 H350"/></g>
+    <g fill="currentColor"><circle cx="70" cy="230" r="4"/><circle cx="150" cy="230" r="4"/><circle cx="230" cy="230" r="4"/><circle cx="310" cy="230" r="4"/><circle cx="350" cy="230" r="4"/><circle cx="430" cy="230" r="4"/><circle cx="110" cy="140" r="4"/><circle cx="190" cy="140" r="4"/><circle cx="270" cy="140" r="4"/><circle cx="310" cy="140" r="4"/><circle cx="390" cy="140" r="4"/></g>
+    <rect x="226" y="40" width="48" height="58" rx="3" fill="#ffffff" stroke="currentColor" stroke-width="2"/>
+    <path d="M250 98 V124 M241 114 L250 128 L259 114" fill="none" stroke="#174d9e" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="284" y="74" fill="currentColor" font-family="Inter, Arial" font-size="13" font-weight="600">F = 1,100 N</text>
+    <text x="70" y="306" fill="currentColor" font-family="Inter, Arial" font-size="12" opacity=".75">span 12 in · bridge mass 85 g</text>
+  </svg>`,
+  eggdrop: `<svg viewBox="0 0 500 340" role="img" aria-label="Schematic of an egg carriage on rails with a spring-damper suspension below it">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M120 24 V300 M380 24 V300" stroke-width="3" opacity=".45"/>
+      <rect x="150" y="54" width="200" height="56" rx="6" fill="#ffffff"/>
+      <rect x="160" y="118" width="180" height="14" rx="3" fill="#ffffff"/>
+      <path d="M190 132 L170 196 M310 132 L330 196"/>
+      <path d="M210 132 v10 l-12 6 l24 8 l-24 8 l24 8 l-24 8 l12 6 v10"/>
+      <path d="M290 132 v18 M278 150 h24 M276 144 v32 h28 v-32 M290 176 v20"/>
+      <rect x="150" y="196" width="200" height="12" rx="3" fill="#ffffff"/>
+      <path d="M60 300 H440" stroke-width="1.5"/>
+    </g>
+    <ellipse cx="250" cy="82" rx="17" ry="22" fill="#ffffff" stroke="#174d9e" stroke-width="2.5"/>
+    <path d="M410 70 V200 M402 188 L410 204 L418 188" fill="none" stroke="#174d9e" stroke-width="2.5" stroke-linecap="round"/>
+    <g fill="currentColor" font-family="Inter, Arial" font-size="12"><text x="180" y="176" opacity=".8">k</text><text x="314" y="166" opacity=".8">c</text><text x="424" y="140">5–20 ft</text><text x="166" y="46" opacity=".75">carriage 1,050 g</text></g>
+    <g stroke="currentColor" stroke-width="1.2" opacity=".45"><path d="M80 306 l-10 10 M120 306 l-10 10 M160 306 l-10 10 M200 306 l-10 10 M240 306 l-10 10 M280 306 l-10 10 M320 306 l-10 10 M360 306 l-10 10 M400 306 l-10 10 M440 306 l-10 10"/></g>
+  </svg>`,
+  comsol: `<svg viewBox="0 0 500 340" role="img" aria-label="Stress contour along a fixed bar under axial load">
+    <defs><linearGradient id="vm" x1="0" x2="1"><stop offset="0" stop-color="#174d9e"/><stop offset=".12" stop-color="#5b8fd6"/><stop offset=".3" stop-color="#a9c4ec"/><stop offset=".7" stop-color="#a9c4ec"/><stop offset=".9" stop-color="#5b8fd6"/><stop offset="1" stop-color="#d9534f"/></linearGradient></defs>
+    <rect x="44" y="78" width="16" height="104" fill="currentColor" opacity=".18"/>
+    <g stroke="currentColor" stroke-width="1.2" opacity=".5"><path d="M44 86 l-10 10 M44 106 l-10 10 M44 126 l-10 10 M44 146 l-10 10 M44 166 l-10 10"/></g>
+    <rect x="60" y="112" width="340" height="36" fill="url(#vm)" stroke="currentColor" stroke-width="1.5"/>
+    <g stroke="#174d9e" stroke-width="2.5" stroke-linecap="round" fill="none"><path d="M402 130 H450 M440 121 L452 130 L440 139"/></g>
+    <text x="410" y="108" fill="currentColor" font-family="Inter, Arial" font-size="12" font-weight="600">1,000 N</text>
+    <g font-family="Inter, Arial" font-size="12" fill="currentColor">
+      <text x="60" y="206" opacity=".75">linear vs nonlinear: under 3.1% apart</text>
+      <text x="60" y="228" opacity=".75">far from the load, every case converges</text>
+    </g>
+    <g transform="translate(60 260)"><rect width="200" height="10" fill="url(#vm)" rx="2"/><text y="28" fill="currentColor" font-family="Inter, Arial" font-size="11" opacity=".7">low</text><text x="200" y="28" text-anchor="end" fill="currentColor" font-family="Inter, Arial" font-size="11" opacity=".7">von Mises stress  high</text></g>
+  </svg>`,
+  wardrobe: `<svg viewBox="0 0 500 340" role="img" aria-label="Sketch of a web app showing a grid of clothing items and an outfit panel">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="60" y="36" width="380" height="266" rx="8" fill="#ffffff"/>
+      <path d="M60 68 H440" stroke-width="1.5"/>
+      <rect x="84" y="88" width="78" height="80" rx="5"/><rect x="176" y="88" width="78" height="80" rx="5"/>
+      <rect x="84" y="182" width="78" height="96" rx="5"/><rect x="176" y="182" width="78" height="96" rx="5"/>
+      <path d="M106 104 l10 -5 h20 l10 5 l7 12 l-9 4 v34 h-36 v-34 l-9 -4 z"/>
+      <path d="M200 102 h30 l4 54 h-14 l-5 -34 l-5 34 h-14 z"/>
+      <path d="M104 200 h38 l8 64 h-54 z"/>
+      <path d="M190 252 q0 -16 18 -16 l18 -10 l18 26 z M190 252 h54"/>
+    </g>
+    <rect x="276" y="88" width="140" height="190" rx="5" fill="none" stroke="#174d9e" stroke-width="2.5"/>
+    <g fill="currentColor"><circle cx="78" cy="52" r="4" opacity=".5"/><circle cx="92" cy="52" r="4" opacity=".5"/><circle cx="106" cy="52" r="4" opacity=".5"/></g>
+    <text x="292" y="114" fill="#174d9e" font-family="Inter, Arial" font-size="13" font-weight="600">Today's outfit</text>
+    <g stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".45"><path d="M292 140 H392 M292 164 H372 M292 188 H384 M292 212 H360"/></g>
+  </svg>`
+};
+
+function media(p, cls) {
+  if (p.cover) return `<div class="media ${p.fit === "cover" && cls !== "lead" ? "cover" : ""}"><img src="${IMG + p.cover}" alt="${esc(p.coverAlt || p.title)}" loading="lazy"></div>`;
+  return `<div class="media ${cls || ""}">${DRAW[p.draw]}</div>`;
+}
+
+// ================= Projects =================
+const PROJECTS = [
+  {
+    id: "robo-cop-out", title: "Robo Cop-Out competition robot", category: "Robotics", year: "2025", date: "Spring 2025",
+    course: "ES 51 · Computer-Aided Machine Design", badge: "1st of 16 teams",
+    cover: "robot-finished.jpg", fit: "cover", coverAlt: "The finished robot, with a pink acrylic chassis, blue arm, and silicone-padded clamp.",
+    coverCaption: "The finished robot. Pink acrylic chassis, belt-driven arm, and silicone-padded clamp.",
+    summary: "A ramp-climbing robot built for a tic-tac-toe arena game under strict size, actuator, and current limits. Our team of six won the tournament.",
+    role: "Team of six. Drivetrain and arm analysis, SolidWorks assembly, tournament repairs.",
+    status: "Competed. First place of 16 teams.",
+    stats: [["1st", "of 16 teams in the tournament"], ["30°", "steepest ramp, climbed under a 9 A limit"], ["2.3 kg", "final mass, inside an 11 in cube"]],
+    tools: "SolidWorks, Free-body diagrams, Torque analysis, Gear trains, Laser cutting, 3D printing, Silicone casting",
+    sections: [
+      ["A game played on ramps", [
+        "The ES 51 final competition, Turf Wars, put robots in an arena with 15° and 30° ramps. Teams collected blocks, balls, and hockey pucks and placed them on a central tic-tac-toe grid, and three in a row ended the match on the spot.",
+        "The 3-point hockey pucks sat at the top of the 30° ramp, so our strategy was built around climbing it reliably. The rules set hard limits: the robot had to fit in an 11 × 11 × 11 in box, use only approved lab materials, run at most six actuators with two to three screwdriver motors, and draw no more than 9 A."
+      ]],
+      ["Choosing a concept", [
+        "We sketched three architectures: a three-wheel chassis, a front-bucket design, and a slanted \"tank\" chassis. We scored them in a weighted Pugh matrix. Maneuverability, deposit reliability, and simplicity of control carried the most weight, followed by climbing ability and center-of-mass stability.",
+        "The bucket design won the matrix with 15 points. Gameplay trials then changed our minds: a compact two-prong clamp was simpler to fabricate, picked pieces up faster, and was less sensitive to alignment at the grid. We switched to the clamp for the final robot."
+      ]],
+      ["Sizing the drivetrain and arm", [
+        "I worked from free-body diagrams of the robot on flat ground and on the 30° ramp, using the center of mass from our SolidWorks assembly. With a 2.3 kg robot, 1.5 in wheels, and a target of reaching 0.1 m/s in one second, the required torque per wheel came to about 0.22 N·m. Friction could hold about 0.39 N·m before slipping, so the wheels would grip.",
+        "That check confirmed a <strong>3:1 drive reduction</strong> was enough to climb 30° without wheel slip. For the arm, the load from the grabber and four linkages called for a <strong>10:1 reduction</strong>, which gave an arm speed of about 1.7 rad/s. The clamp servo's stall torque could grip with about 17 N, far more than the 0.2 N needed to hold a game piece."
+      ]],
+      ["The final robot", [
+        "Two rear-mounted screwdriver motors drive silicone-cast wheels with acrylic inserts. A wide wheelbase and a low-mounted battery keep the center of mass low on the ramps. The arm pivots on a central shaft, driven by a continuous-rotation servo through a three-pulley timing-belt system. A second servo closes the clamp, whose Ecoflex silicone pads add friction across blocks, pucks, and balls.",
+        "The finished robot measured 10.97 × 10.8 × 9.73 in, weighed 2.3 kg, used four actuators, and had a 12.8 in arm with a 6 in maximum grip."
+      ]],
+      ["Winning the tournament", [
+        "We took first place out of 16 teams. Our routine was to grab the hockey puck early, then quickly place a block or ball to complete a line, and we finished three tic-tac-toe lines across the tournament.",
+        "Two failures showed up mid-tournament. A gearbox came loose because it was not fastened securely enough, which cost us our only loss when it happened again. Inconsistent battery charging also hurt two matches. I helped fix both in the pits: we re-secured the gearbox and added voltage checks and battery rotation before every match."
+      ]],
+      ["What I would change", [
+        "A next version would use positive gearbox retention, such as mounting brackets or a quick-lock design, and a broader grip with better feedback on the clamp, which was our weakest point for precise placement."
+      ]]
+    ],
+    photos: [
+      ["robot-finished.jpg", "The finished robot."],
+      ["robot-clamp-arm.jpg", "The assembled arm and clamp mechanism during build."],
+      ["robot-pulley-arm.jpg", "The arm's three-pulley timing-belt drive."],
+      ["robot-drivetrain.jpg", "The nearly finished drivetrain with both screwdriver-motor gearboxes."],
+      ["robot-clamp.jpg", "The clamp with silicone inserts and its servo housing."],
+      ["robot-exploded-cad.jpg", "Exploded SolidWorks view of the drivetrain, arm, and clamp."],
+      ["robot-drawing-claw.jpg", "Dimensioned drawing of the claw."],
+      ["robot-fbd-ramp.jpg", "Free-body diagram on the ramp, with the SolidWorks center of mass."],
+      ["robot-fbd-flat.jpg", "Free-body diagram on flat ground."],
+      ["robot-calcs.jpg", "Torque and clamp-force calculations."],
+      ["robot-pugh-matrix.jpg", "Weighted Pugh matrix comparing the three concepts."],
+      ["robot-sketch-tank.jpg", "Concept sketch of the slanted tank chassis."],
+      ["robot-sketch-bucket.jpg", "Concept sketch of the front-bucket design."]
+    ]
+  },
+  {
+    id: "drip-detector", title: "Drip Detector conductivity instrument", category: "Electronics", year: "2026", date: "Spring 2026",
+    course: "ES 50 · Introduction to Electrical Engineering",
+    cover: "drip-schematic.jpg", coverAlt: "Full circuit schematic of the Drip Detector.",
+    coverCaption: "Full schematic: the probe voltage divider into A0, a 16×2 LCD, three LEDs, and a buzzer.",
+    summary: "An Arduino instrument that measures how well a liquid conducts electricity and plays it back as musical notes, LEDs, and a live resistance readout.",
+    role: "Team of three. Circuit build, Arduino firmware, threshold calibration, and testing.",
+    status: "Demonstrated at the ES 50 design fair.",
+    stats: [["20", "ADC samples averaged per reading"], ["7", "conductivity bands, mapped to notes C4–B4"], ["6", "test solutions used to validate the redesign"]],
+    tools: "Arduino Uno, C++, Voltage divider design, Analog-to-digital conversion, LCD and LED interfacing, Circuit schematics",
+    sections: [
+      ["Starting with solids", [
+        "We set out to build a material classifier: touch two probes to an object and sort it into low, medium, or high conductivity, the way a metal detector or diamond tester infers something from an electrical measurement.",
+        "Testing broke that idea. Readings depended on how hard the probes were pressed, how much surface they touched, whether the surface was oxidized, and the probe angle. The same object gave different readings from one test to the next. Instead of forcing an unreliable classifier, we redesigned the project around liquids. Probes surrounded by a liquid make far more consistent contact, and conductivity changes predictably as salt dissolves into ions."
+      ]],
+      ["Measuring resistance with a voltage divider", [
+        "An Arduino can only measure voltage, so the liquid between the probes becomes one half of a voltage divider. It sits in series with a known 100 Ω resistor across 5 V, and the Arduino reads the midpoint on analog pin A0. Solving the divider for the liquid's resistance gives:"
+      ], `<div class="eq">R<sub>sol</sub> = R<sub>1</sub> · (V<sub>in</sub> / V<sub>out</sub>) − R<sub>1</sub>,&nbsp;&nbsp; with R<sub>1</sub> = 100 Ω and V<sub>in</sub> = 5 V</div>`],
+      ["Firmware", [
+        "Each reading averages <strong>20 samples taken 5 ms apart</strong>, which smooths out noise from probe movement, bubbles, and ripples in the liquid. An averaged value under 100 counts means no contact. Values from 100 to 520 are split into seven bands, and each band plays a note from C4 (262 Hz) to B4 (494 Hz) on a buzzer using tone().",
+        "A note only plays when the band changes, so the device behaves like an instrument rather than an alarm: dip the probes in, hear a note, add salt, and hear it climb. Red, yellow, and green LEDs on pins 8 to 10 show the conductivity range at a glance, and the 16×2 LCD shows the current note and the calculated resistance."
+      ]],
+      ["My part", [
+        "I built the circuit, wrote and refined the Arduino code, calibrated the seven thresholds, and ran the system testing that validated the redesign across six test solutions. I also co-wrote the final report and helped produce the project video."
+      ]],
+      ["Limits and next steps", [
+        "Drip Detector is not a calibrated conductivity meter. Its readings depend on probe spacing, depth, and temperature, and DC current can cause electrode effects over long tests. The 100 Ω reference also limits the range, so a 1 kΩ or 10 kΩ resistor would make it more sensitive to weak conductors.",
+        "The buzzer was too quiet for the loud design fair. A next version would add a transistor driver or speaker, a fixed probe holder for repeatable spacing, and a calibration mode that sets thresholds from air, a baseline liquid, and a strong solution."
+      ]]
+    ],
+    photos: [
+      ["drip-team-fair.jpg", "Our team at the ES 50 design fair. Each cup is a test solution labeled with the note it plays."],
+      ["drip-schematic.jpg", "Full circuit schematic."],
+      ["drip-block-diagram.jpg", "Block diagram from liquid sample to LCD, LEDs, and buzzer."]
+    ]
+  },
+  {
+    id: "truss-bridge", title: "Truss bridge design & FEA", category: "Structures", year: "2026", date: "Spring 2026",
+    course: "ES 120 · Mechanics of Solids", draw: "bridge",
+    coverCaption: "Load path through the truss. The highlighted members carried the most stress in FEA.",
+    summary: "An 85 g plywood and acrylic truss bridge that held 1,100 N in the Instron, about 1,300 times its own weight, refined through eight rounds of FEA.",
+    role: "Team project. CAD, COMSOL FEA, fabrication, and validation testing.",
+    status: "Built and load-tested in the ES 120 bridge competition, May 2026.",
+    stats: [["1,100 N", "peak load held in the Instron"], ["≈1,300×", "its own 85 g weight"], ["≈25%", "material removed through 8 FEA iterations"]],
+    tools: "SolidWorks, COMSOL Multiphysics, Laser cutting, Instron testing, Hand calculations",
+    sections: [
+      ["The brief", [
+        "Every team got the same materials: ¼ in and ⅛ in plywood and ⅛ in acrylic. The bridge had to be 12 in long, 2 to 3.75 in wide, and no more than 8 in tall, with a clear 2 × 4 in channel through the middle for the loading car. No metal fasteners were allowed, glue could not carry load, and everything had to be cut on a laser cutter or with hand tools.",
+        "Bridges were scored on <strong>strength-to-weight ratio</strong>: the peak force a bridge survived in the Instron divided by its weight. A test ended when the bridge broke or deflected 2 in."
+      ]],
+      ["Materials and modeling", [
+        "The course's Instron data framed the trade-off. Plywood reached about 80 MPa along the grain at a density of about 0.7 g/cm³, while acrylic reached about 65 MPa at 1.2 g/cm³. Plywood's strength also changes with grain direction, so part orientation mattered.",
+        "We modeled every member, gusset, and joint as a SolidWorks assembly, and produced the dimensioned drawings and laser-cut profiles straight from that model, so the parts we cut matched the parts we analyzed."
+      ]],
+      ["Eight rounds of FEA", [
+        "I ran the design through <strong>8 COMSOL FEA iterations</strong>. Each pass showed which members carried peak stress and which carried almost none. Trimming the lightly loaded members removed about 25% of the material before we cut anything, which matters directly when the score divides by weight."
+      ]],
+      ["Checking the model", [
+        "We validated the FEA against hand calculations and Instron tensile and bending tests, and the predictions matched to within 10%.",
+        "That work built on the ES 120 labs, where we tensile-tested steel, aluminum, acrylic, Delrin, and printed ABS on the Instron and compared I-beam bending measurements against COMSOL. I also ran a separate COMSOL study on when linear elasticity holds."
+      ]],
+      ["Result", [
+        "The finished bridge weighed 85 g and held <strong>1,100 N</strong>, about 1,300 times its own weight."
+      ]]
+    ],
+    photos: []
+  },
+  {
+    id: "egg-drop-suspension", title: "Egg drop suspension system", category: "Mechanical systems", year: "2026", date: "Fall 2026",
+    course: "ES 125 · Mechanical Systems", draw: "eggdrop", live: true,
+    coverCaption: "The problem as a mass-spring-damper system: a 1,050 g carriage on rails, falling 5 to 20 ft.",
+    summary: "An ongoing team design for a shock-absorbing landing system that keeps an egg intact through drops of up to 20 ft, built from RC-car shocks and plywood.",
+    role: "Team project. Design, analysis, and fabrication.",
+    status: "In design. CAD due Dec 1, competition Dec 9, 2026.",
+    stats: [["5–20 ft", "allowed drop heights"], ["12", "RC-car shocks to work with"], ["≈1.3 in", "of travel per shock"]],
+    tools: "Mass-spring-damper modeling, SolidWorks, Laser cutting, Spring and damper selection",
+    sections: [
+      ["The challenge", [
+        "An egg rides in a 1,050 g drop carriage that slides down vertical rails. With nothing underneath it, the carriage is in free fall. Our job is to design the suspension that bolts under the carriage's team plate and keeps the egg from cracking.",
+        "The kit is fixed: 12 Traxxas T-Maxx big-bore shocks, one spring per shock from a progressive spring set, silicone shock oil in 20, 40, and 60 weight, plywood, and ¼-20 hardware. The device has to fit between the rails, stay under 48 in tall and 36 in wide, and survive up to three drops with no repairs."
+      ]],
+      ["How it is scored", [
+        "Each drop is scored on drop height and on how low the device keeps peak acceleration, mass, and height compared with the rest of the field. A cracked egg scores zero for that drop. A wireless data acquisition system records the peak acceleration of every drop."
+      ]],
+      ["The engineering problem", [
+        "For an undamped spring, peak acceleration happens at maximum compression, so a very soft spring with long travel would be ideal. Our shocks only travel about 1.3 in, so the design has to balance stiffness, damping, and geometry. Damping removes energy so the carriage doesn't bounce, and angling or linking the shocks changes the effective spring constant and damping coefficient of the device as a whole. Those effective values are what we have to predict and present."
+      ]],
+      ["Where it stands", [
+        "We are choosing between candidate designs now. The CAD and design write-up are due December 1, and the drop competition is December 9, 2026. I will add the analysis, build photos, and drop results here after the competition."
+      ]]
+    ],
+    photos: []
+  },
+  {
+    id: "elasticity-fea-study", title: "Elasticity assumptions in COMSOL", category: "Analysis", year: "2026", date: "Spring 2026",
+    course: "ES 120 · Mechanics of Solids", draw: "comsol",
+    coverCaption: "A steel bar fixed at one end and pulled with 1,000 N, colored by von Mises stress.",
+    summary: "A finite element study that tests two assumptions behind everyday hand calculations: that linear elasticity holds, and that St. Venant's principle smooths out how a load is applied.",
+    role: "Individual project.",
+    status: "Complete.",
+    stats: [["< 3.1%", "gap between linear and nonlinear models at 1,000 N"], ["44 MPa", "peak stress, well below steel's ~250 MPa yield"], ["3", "statically equivalent load cases compared"]],
+    tools: "COMSOL Multiphysics, Linear and geometrically nonlinear solid mechanics, Mesh-based stress analysis",
+    sections: [
+      ["Why test assumptions", [
+        "Most hand calculations in solid mechanics rest on two simplifications. Linear elasticity assumes deformations are small enough to ignore geometric nonlinearity. St. Venant's principle says that, far enough from a load, it doesn't matter exactly how that load is applied. I used COMSOL to check whether both hold for a simple loaded bar."
+      ]],
+      ["Linear vs. nonlinear", [
+        "I modeled a 300 × 4 × 4 mm structural steel bar (E = 200 GPa, ν = 0.3), fixed at one end, under axial loads from 100 N to 1,000 N. I solved each load case with both linear and geometrically nonlinear solid mechanics and compared the tip displacement.",
+        "The two models stayed within about 3% of each other across the full range. Peak von Mises stress at 1,000 N was about 44 MPa, far below steel's yield strength of about 250 MPa, so the bar stayed in the small-deformation regime where the linear model is accurate."
+      ]],
+      ["St. Venant's principle", [
+        "I applied the same 1,000 N resultant three ways: across the full end face, across half of it, and on a small patch. Near the loaded end the stress fields looked very different, and the patch load produced a clear hot spot. Farther along the bar, all three converged to the same nearly uniform stress."
+      ]],
+      ["Why it matters", [
+        "Both assumptions held for these loads. That gave me confidence to use hand calculations as a check on FEA, which is exactly how I validated the truss bridge model later that semester."
+      ]]
+    ],
+    photos: []
+  },
+  {
+    id: "virtual-wardrobe", title: "Virtual wardrobe web app", category: "Software", year: "2024", date: "Fall 2024",
+    course: "CS50 · Introduction to Computer Science", draw: "wardrobe",
+    coverCaption: "Users catalog clothing items and assemble them into outfits.",
+    summary: "A full-stack Python and Flask web app for cataloging clothes and putting outfits together, with secure accounts and structured data storage.",
+    role: "Independent final project.",
+    status: "Complete.",
+    stats: [],
+    tools: "Python, Flask, SQL, HTML and CSS, User authentication",
+    sections: [
+      ["The idea", [
+        "A place to keep track of the clothes you own and plan outfits without digging through a closet."
+      ]],
+      ["How it works", [
+        "Users create an account and log in securely, add clothing items, and assemble them into outfits. The app is built in Python with Flask, with a database behind it that stores each user's items and outfits."
+      ]]
+    ],
+    photos: []
+  }
+];
+
+// ================= Experience =================
+const EXPERIENCE = [
+  {
+    org: "Talky Labs", role: "AI Engineer Intern", where: "Madrid, Spain", when: "June – August 2026", short: "Jun–Aug 2026",
+    about: "Talky Labs builds an AI system that automates financial operations such as invoicing and bank reconciliation.",
+    bullets: [
+      "Worked on a production AI pipeline automating invoicing and bank reconciliation, deployed on AWS through infrastructure-as-code.",
+      "Built golden datasets from verified historical financial records to benchmark the AI agents and isolate failure modes.",
+      "Built an evaluation harness that traces each agent error to its root cause and stores the fix in a Neo4j GraphRAG knowledge library."
+    ]
+  },
+  {
+    org: "Common Sense Institute", role: "Junior Fellow, Research Intern", where: "Greenwood Village, CO", when: "March – August 2025", short: "Mar–Aug 2025",
+    about: "",
+    bullets: [
+      "Led data collection for an economic model profiling every Arizona legislative district for lawmakers.",
+      "Published an Arizona jobs update within one day of a Bureau of Labor Statistics release, analyzing a 3,500-job monthly loss.",
+      "Verified labor-market claims against BLS and state data, correcting published figures in public reports."
+    ]
+  },
+  {
+    org: "A&A Brothers Trucking", role: "Mechanic & Financial Assistant", where: "Denver, CO", when: "January 2020 – June 2024", short: "2020–2024",
+    about: "My family's trucking company, where I learned mechanical systems with my hands before I studied them.",
+    bullets: [
+      "Diagnosed and repaired engines, brakes, suspension, and electrical systems on a five-truck commercial fleet.",
+      "Managed parts inventory and repair-cost tracking, improving expense visibility for maintenance decisions."
+    ]
+  }
+];
+
+const LEADERSHIP = [
+  ["Harvard Aerospace Collective & Robotics Club", "Member", "Design projects in propulsion, vehicles, and robotics."],
+  ["Society of Hispanic Professional Engineers (SHPE)", "Member", "Engineering professional development."],
+  ["Harvard Latinxs in Finance and Technology (LIFT)", "Consulting Analyst", "Led deliverables for a talent-strategy engagement with Bose Corporation."],
+  ["H.O.P.E. at Colorado Academy", "Director", "Led operations for a student initiative serving more than 2,000 people each year."]
+];
+
+// ================= Helpers =================
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+function card(p) {
+  const right = (p.live ? `<span class="pill">Currently Working On</span>` : p.badge ? `<span class="pill">${esc(p.badge)}</span>` : "") + `<span>${esc(p.year)}</span>`;
+  return `<a class="card" href="#${p.id}" data-cat="${esc(p.category)}">
+    ${media(p)}
+    <div class="meta"><span>${esc(p.category)}</span><span class="right">${right}</span></div>
+    <div class="title-row"><h3>${esc(p.title)}</h3><span class="arrow" aria-hidden="true">↗</span></div>
+    <p>${esc(p.summary)}</p>
+  </a>`;
+}
+
+function emailBlock() {
+  return `<div class="email-wrap"><a class="email" href="mailto:${EMAIL}">${EMAIL}</a><button class="copy" type="button" data-copy="${EMAIL}">Copy</button></div>`;
+}
+
+function touch(withHeading) {
+  return `<div class="wrap touch">
+    <div><h2>Get in touch</h2><p>Questions about a project or an engineering opportunity?</p></div>
+    ${emailBlock()}
+  </div>`;
+}
+
+// ================= Views =================
+function viewHome() {
+  const hero = PROJECTS[0];
+  return `
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Mechanical engineering · Harvard ’28</p>
+      <h1>Alex<br>Miramontes<span class="dot">.</span></h1>
+      <p class="lead">I'm a third-year mechanical engineering student at Harvard College, Class of 2028. I design, analyze, and build mechanical and electromechanical systems, from FEA-tested structures to competition robots.</p>
+      <div class="actions"><a class="btn dark" href="#projects">Explore projects</a><a class="btn" href="${RESUME}" target="_blank" rel="noopener">Download résumé</a></div>
+      <div class="social"><a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn ↗</a><a href="#contact">Email ↗</a></div>
+    </div>
+    <figure>
+      <div class="hero-img"><img src="${IMG + hero.cover}" alt="${esc(hero.coverAlt)}"></div>
+      <figcaption class="cap-row"><span>Built in ES 51 · 1st of 16 teams</span><a href="#${hero.id}">Robo Cop-Out robot ↗</a></figcaption>
+    </figure>
+  </div>
+
+  <section class="wrap section">
+    <div class="sec-head"><div><p class="eyebrow">Selected work</p><h2>Projects</h2></div><a class="ulink" href="#projects">View all projects</a></div>
+    <div class="grid">${PROJECTS.map(card).join("")}</div>
+  </section>
+
+  <section class="band">
+    <div class="wrap band-inner">
+      <div class="band-copy">
+        <p class="eyebrow">Beyond the classroom</p>
+        <h2>Industry, research,<br>and the shop floor<span class="dot">.</span></h2>
+        <p class="lead">My work spans engineering projects at Harvard, an AI engineering internship in Madrid, economic research at the Common Sense Institute, and four years repairing a commercial truck fleet at my family's company.</p>
+        <div><a class="ulink" href="#experience">Experience & leadership</a></div>
+      </div>
+      <div class="xrows">
+        ${EXPERIENCE.map(x => `<a class="xrow" href="#experience"><div><b>${esc(x.org)}</b><span class="role">${esc(x.role)}</span></div><span class="when">${esc(x.short)}</span><span class="arrow" aria-hidden="true">↗</span></a>`).join("")}
+      </div>
+    </div>
+  </section>
+  ${touch()}`;
+}
+
+function viewProjects() {
+  const cats = ["All"].concat([...new Set(PROJECTS.map(p => p.category))]);
+  return `
+  <div class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">${PROJECTS.length} projects</p>
+      <h1>Projects<span class="dot">.</span></h1>
+      <p class="lead">Coursework and team builds across robotics, structures, electronics, analysis, and software.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter projects">
+      ${cats.map((c, i) => `<button type="button" id="filter-${i}" data-filter="${esc(c)}" aria-pressed="${i === 0}">${esc(c)}</button>`).join("")}
+    </div>
+    <div class="grid" id="project-grid" style="padding-bottom:88px">${PROJECTS.map(card).join("")}</div>
+  </div>`;
+}
+
+function viewProject(p) {
+  const idx = PROJECTS.indexOf(p);
+  const next = PROJECTS[(idx + 1) % PROJECTS.length];
+  const hasPhotos = p.photos.length > 0;
+  const jumps = `<button type="button" data-jump="sec-0">Read the project ↓</button>` + (hasPhotos ? `<button type="button" data-jump="photos">View photos ↓</button>` : "");
+  return `
+  <div class="wrap">
+    <div class="crumb"><a href="#projects">All projects</a><span>/</span>${esc(p.title)}</div>
+    <div class="p-hero">
+      <div class="copy-col">
+        <p class="eyebrow">${esc(p.category)} · ${esc(p.date)}</p>
+        <h1>${esc(p.title)}</h1>
+        <p class="lead">${esc(p.summary)}</p>
+        <dl class="facts">
+          <div><dt>Role</dt><dd>${esc(p.role)}</dd></div>
+          <div><dt>Status</dt><dd>${esc(p.status)}</dd></div>
+          <div><dt>Course</dt><dd>${esc(p.course)}</dd></div>
+          <div><dt>Date</dt><dd>${esc(p.date)}</dd></div>
+        </dl>
+        <div class="jumps">${jumps}</div>
+      </div>
+      <figure class="lead-fig">${media(p, "lead")}<figcaption>${esc(p.coverCaption || "")}</figcaption></figure>
+    </div>
+    ${p.stats.length ? `<div class="stats">${p.stats.map(s => `<div class="stat"><b>${esc(s[0])}</b><span>${esc(s[1])}</span></div>`).join("")}</div>` : ""}
+    <div class="p-body">
+      <aside class="side">
+        <div><p class="label">In this project</p><nav class="toc" aria-label="In this project">${p.sections.map((s, i) => `<button type="button" data-jump="sec-${i}">${esc(s[0])}</button>`).join("")}${hasPhotos ? `<button type="button" data-jump="photos">Photos & drawings</button>` : ""}</nav></div>
+        <div class="tools"><p class="label">Tools & skills</p>${esc(p.tools)}</div>
+      </aside>
+      <div class="prose">
+        ${p.sections.map((s, i) => `<section id="sec-${i}"><h2>${esc(s[0])}</h2>${s[1].map(par => `<p>${par}</p>`).join("")}${s[2] || ""}</section>`).join("")}
+      </div>
+    </div>
+    ${hasPhotos ? `<section class="photos" id="photos">
+      <div class="sec-head"><div><p class="eyebrow">${p.photos.length} images</p><h2>Photos & drawings</h2></div></div>
+      <div class="photo-grid">${p.photos.map((ph, i) => `<button class="photo" type="button" data-photo="${i}"><div class="media"><img src="${IMG + ph[0]}" alt="${esc(ph[1])}" loading="lazy"></div><span>${esc(ph[1])}</span></button>`).join("")}</div>
+    </section>` : ""}
+    <section class="section">
+      <div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>Next project</h2></div><a class="ulink" href="#projects">All projects</a></div>
+      <div class="grid">${card(next)}</div>
+    </section>
+  </div>`;
+}
+
+function viewExperience() {
+  return `
+  <div class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Experience & leadership</p>
+      <h1>Experience<span class="dot">.</span></h1>
+      <p class="lead">Internships, research, and hands-on work, most recent first.</p>
+    </div>
+    <div class="xlist">
+      ${EXPERIENCE.map(x => `<article class="xitem">
+        <div class="when"><b>${esc(x.when)}</b><span>${esc(x.where)}</span></div>
+        <div class="body"><h3>${esc(x.role)}</h3><div class="org">${esc(x.org)}</div>${x.about ? `<p>${esc(x.about)}</p>` : ""}<ul>${x.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul></div>
+      </article>`).join("")}
+    </div>
+    <section class="section" style="margin-top:24px">
+      <div class="sec-head"><div><p class="eyebrow">Involvement</p><h2>Leadership & activities</h2></div></div>
+      <div class="xlist">
+        ${LEADERSHIP.map(l => `<article class="xitem"><div class="when"><b>${esc(l[1])}</b></div><div class="body"><h3>${esc(l[0])}</h3><p>${esc(l[2])}</p></div></article>`).join("")}
+      </div>
+    </section>
+  </div>
+  ${touch()}`;
+}
+
+function viewAbout() {
+  return `
+  <div class="wrap">
+    <div class="page-head"><p class="eyebrow">About</p><h1>About me<span class="dot">.</span></h1></div>
+    <div class="about">
+      <div class="prose">
+        <p class="lead" style="color:var(--ink)">I'm Alejandro Miramontes Rodriguez, and I go by Alex. I'm a third-year mechanical engineering student at Harvard College, from Denver, Colorado.</p>
+        <p>Before I studied engineering, I practiced it in a shop. From 2020 to 2024 I worked at A&amp;A Brothers Trucking, my family's company, diagnosing and repairing engines, brakes, suspension, and electrical systems on a five-truck fleet. Finding a fault meant testing one subsystem at a time until the problem had nowhere left to hide, and I still work that way.</p>
+        <p>At Harvard I have carried that into design: sizing gear ratios from free-body diagrams for a robot that won its tournament, refining a truss bridge through eight rounds of FEA until it held about 1,300 times its own weight, and pivoting a failing sensor project into an instrument that worked. I have also worked outside mechanical engineering, building evaluation tools for an AI finance system in Madrid and researching labor markets at the Common Sense Institute.</p>
+        <p>I'm looking for engineering internships where I can design, build, and test real hardware.</p>
+        <div class="actions"><a class="btn dark" href="#projects">See my projects</a><a class="btn" href="${RESUME}" target="_blank" rel="noopener">Download résumé</a></div>
+      </div>
+      <aside class="facts-col">
+        <div><h3>Education</h3><ul>
+          <li>Harvard University<small>S.B. Mechanical Engineering, expected May 2028</small></li>
+          <li>Colorado Academy<small>High school diploma, 2024</small></li>
+        </ul></div>
+        <div><h3>Coursework</h3><ul>
+          <li>Mechanics of Solids<small>ES 120</small></li><li>Mechanical Systems<small>ES 125</small></li><li>Systems & Control<small>ECE 155</small></li><li>Computer-Aided Machine Design<small>ES 51</small></li><li>Introduction to Electrical Engineering<small>ES 50</small></li>
+        </ul></div>
+        <div><h3>Tools</h3><ul>
+          <li>Engineering<small>SolidWorks, COMSOL Multiphysics (FEA), MATLAB, Instron testing, technical drawings</small></li>
+          <li>Fabrication<small>Laser cutting, CNC machining, 3D printing, Arduino prototyping</small></li>
+          <li>Programming<small>Python, C/C++, Java, SQL, AWS, infrastructure-as-code, Neo4j</small></li>
+        </ul></div>
+        <div><h3>Languages</h3><ul><li>English and Spanish<small>Native</small></li><li>French<small>Intermediate</small></li></ul></div>
+      </aside>
+    </div>
+  </div>`;
+}
+
+function viewContact() {
+  return `
+  <div class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Contact</p>
+      <h1>Get in touch<span class="dot">.</span></h1>
+      <p class="lead">Questions about a project or an engineering opportunity? Email is the best way to reach me.</p>
+    </div>
+    <div style="display:grid;gap:24px;padding-bottom:96px">
+      ${emailBlock()}
+      <div class="social" style="font-size:15px"><a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn ↗</a><a href="${RESUME}" target="_blank" rel="noopener">Résumé ↗</a></div>
+    </div>
+  </div>`;
+}
+
+// ================= Router =================
+const main = document.getElementById("main");
+const BASE = "Alex Miramontes | Mechanical Engineering";
+let current = null;
+
+function render() {
+  const h = location.hash.replace(/^#/, "");
+  if (h === "top") { window.scrollTo(0, 0); return; }
+  const p = PROJECTS.find(x => x.id === h);
+  let html, title = BASE, nav = "";
+  if (p) { html = viewProject(p); title = p.title + " | Alex Miramontes"; nav = "projects"; }
+  else if (h === "projects") { html = viewProjects(); title = "Projects | Alex Miramontes"; nav = "projects"; }
+  else if (h === "experience") { html = viewExperience(); title = "Experience | Alex Miramontes"; nav = "experience"; }
+  else if (h === "about") { html = viewAbout(); title = "About | Alex Miramontes"; nav = "about"; }
+  else if (h === "contact") { html = viewContact(); title = "Contact | Alex Miramontes"; nav = "contact"; }
+  else { html = viewHome(); }
+  current = p || null;
+  main.innerHTML = html;
+  document.title = title;
+  document.querySelectorAll("[data-nav]").forEach(a => a.dataset.nav === nav ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  closeMenu();
+  window.scrollTo(0, 0);
+}
+
+// ================= Menu =================
+const menuBtn = document.getElementById("menu-btn");
+const navEl = document.getElementById("site-nav");
+function closeMenu() { navEl.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); menuBtn.textContent = "Menu +"; }
+menuBtn.addEventListener("click", () => {
+  const open = navEl.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(open));
+  menuBtn.textContent = open ? "Close ×" : "Menu +";
+});
+
+// ================= Lightbox =================
+const lb = document.getElementById("lightbox");
+const lbImg = document.getElementById("lb-img");
+const lbCap = document.getElementById("lb-cap");
+let lbIndex = 0;
+function showPhoto(i) {
+  const list = current ? current.photos : [];
+  if (!list.length) return;
+  lbIndex = (i + list.length) % list.length;
+  lbImg.src = IMG + list[lbIndex][0];
+  lbImg.alt = list[lbIndex][1];
+  lbCap.textContent = list[lbIndex][1] + "  (" + (lbIndex + 1) + " of " + list.length + ")";
+  lb.hidden = false;
+  document.getElementById("lb-close").focus();
+}
+function closeLb() { lb.hidden = true; }
+document.getElementById("lb-close").addEventListener("click", closeLb);
+document.getElementById("lb-prev").addEventListener("click", () => showPhoto(lbIndex - 1));
+document.getElementById("lb-next").addEventListener("click", () => showPhoto(lbIndex + 1));
+lb.addEventListener("click", e => { if (e.target === lb || e.target.classList.contains("lb-stage")) closeLb(); });
+document.addEventListener("keydown", e => {
+  if (lb.hidden) return;
+  if (e.key === "Escape") closeLb();
+  if (e.key === "ArrowLeft") showPhoto(lbIndex - 1);
+  if (e.key === "ArrowRight") showPhoto(lbIndex + 1);
+});
+
+// ================= Clicks =================
+document.addEventListener("click", e => {
+  const ph = e.target.closest("[data-photo]");
+  if (ph) { showPhoto(Number(ph.dataset.photo)); return; }
+
+  const j = e.target.closest("[data-jump]");
+  if (j) { const t = document.getElementById(j.dataset.jump); if (t) t.scrollIntoView({ block: "start" }); return; }
+
+  const f = e.target.closest("[data-filter]");
+  if (f) {
+    document.querySelectorAll("[data-filter]").forEach(b => b.setAttribute("aria-pressed", String(b === f)));
+    document.querySelectorAll("#project-grid .card").forEach(c => { c.hidden = !(f.dataset.filter === "All" || c.dataset.cat === f.dataset.filter); });
+    return;
+  }
+
+  const c = e.target.closest("[data-copy]");
+  if (c) {
+    const done = () => { c.textContent = "Copied"; setTimeout(() => { c.textContent = "Copy"; }, 1500); };
+    const fallback = () => {
+      const el = c.parentElement.querySelector(".email");
+      const r = document.createRange(); r.selectNodeContents(el);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      c.textContent = "Selected";
+    };
+    try { navigator.clipboard.writeText(c.dataset.copy).then(done, fallback); } catch (err) { fallback(); }
+    return;
+  }
+
+  if (e.target.closest("#to-top")) { e.preventDefault(); window.scrollTo(0, 0); }
+});
+
+window.addEventListener("hashchange", render);
+render();
+</script>
+</body>
+</html>
