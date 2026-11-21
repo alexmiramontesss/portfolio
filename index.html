@@ -259,6 +259,18 @@ h1, h2, h3 { margin: 0; font-weight: 650; text-wrap: balance; color: var(--ink);
 .xitem p { color: var(--muted); line-height: 1.7; }
 .xitem ul { margin: 0; padding-left: 1.15em; display: grid; gap: 8px; color: var(--muted); line-height: 1.65; }
 .xitem li::marker { color: var(--blue); }
+.xitem .built { color: var(--ink); }
+.results { margin: 6px 0 0; display: grid; border-top: 1px solid var(--line); }
+.results div { display: grid; grid-template-columns: 110px 1fr; gap: 18px; padding-block: 12px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.results dt { font-weight: 650; font-size: 18px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.results dd { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
+.xitem .label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.choices ul { font-size: 14px; }
+.choices strong { color: var(--ink); font-weight: 600; }
+.story { background: var(--soft); border-radius: var(--radius); padding: 18px 20px; }
+.story p:last-child { color: var(--ink); font-size: 15px; }
+.xfoot { display: grid; gap: 4px; font-size: 13px; }
+@media (max-width: 520px) { .results div { grid-template-columns: 1fr; gap: 2px; } }
 @media (max-width: 760px) { .xitem { grid-template-columns: 1fr; gap: 10px; } }
 
 /* ---------- About ---------- */
@@ -575,37 +587,47 @@ const PROJECTS = [
 const EXPERIENCE = [
   {
     org: "Talky Labs", role: "AI Engineer Intern", where: "Madrid, Spain", when: "June – August 2026", short: "Jun–Aug 2026",
-    about: "Talky Labs builds an AI system that automates financial operations such as invoicing and bank reconciliation.",
-    bullets: [
-      "Worked on a production AI pipeline automating invoicing and bank reconciliation, deployed on AWS through infrastructure-as-code.",
-      "Built golden datasets from verified historical financial records to benchmark the AI agents and isolate failure modes.",
-      "Built an evaluation harness that traces each agent error to its root cause and stores the fix in a Neo4j GraphRAG knowledge library."
-    ]
+    about: "Talky builds AI that automates finance work for large companies, including invoice capture, bookkeeping, bank reconciliation, and three-way matching.",
+    built: "I built a Critic–Optimizer loop that learns from the AI agents' mistakes. When an agent processed an invoice wrong, a critic agent worked out why, and an optimizer agent proposed a fix: either a new prompt instruction or a new rule in a Neo4j knowledge graph. Nothing was applied automatically. Every proposed fix went to a person for approval.",
+    results: [
+      ["608", "verified invoices from an airline client assembled as the test set, covering 2,684 accounting lines"],
+      ["17 of 17", "failures pinpointed in testing, with zero false positives, by tracing errors backward through a 41-step processing trace"],
+      ["0% → 65%", "accuracy on cost-center coding. Rewriting prompts scored 0% in every version; giving agents past invoice history reached 65%"],
+      ["140", "validated rules mined from historical invoices, each requiring agreement across at least 2 real invoices"],
+      ["133", "knowledge gaps sent to people for review instead of guessed; 73 were resolved during the internship"]
+    ],
+    choices: [
+      ["Investigate one area at a time.", "I grouped the 41 processing steps into 7 functional clusters so the critic could work through the pipeline one area at a time."],
+      ["One contradiction blocks a rule.", "A rule with even one contradicting case is never promoted. One rule was 92% confident and was still held back because of a single real outlier."],
+      ["A strict evidence bar.", "Lowering the minimum from 2 invoices to 1 would have nearly tripled the rules, from 87 to 257. I kept it at 2 so no rule was tested on the same invoice that created it."]
+    ],
+    tools: "Python, GPT-4o, Neo4j, AWS, pandas, pytest",
+    recognition: "Won Sage Corps Intern of the Week, July 2026."
   },
   {
     org: "Common Sense Institute", role: "Junior Fellow, Research Intern", where: "Greenwood Village, CO", when: "March – August 2025", short: "Mar–Aug 2025",
-    about: "",
-    bullets: [
-      "Led data collection for an economic model profiling every Arizona legislative district for lawmakers.",
-      "Published an Arizona jobs update within one day of a Bureau of Labor Statistics release, analyzing a 3,500-job monthly loss.",
-      "Verified labor-market claims against BLS and state data, correcting published figures in public reports."
+    about: "Labor-market, workforce, and business-impact research for public reports in Arizona and Colorado.",
+    results: [
+      ["30", "Arizona legislative districts profiled in an economic model for lawmakers and the Arizona Chamber of Commerce. I led the data collection."],
+      ["1 day", "after a Bureau of Labor Statistics release, our Arizona jobs update was published, covering a 3,500-job monthly loss"],
+      ["1.9%", "the corrected Colorado job-growth figure, after I checked employment and education claims against BLS and state data before publication"]
     ]
   },
   {
     org: "A&A Brothers Trucking", role: "Mechanic & Financial Assistant", where: "Denver, CO", when: "January 2020 – June 2024", short: "2020–2024",
-    about: "My family's trucking company, where I learned mechanical systems with my hands before I studied them.",
-    bullets: [
-      "Diagnosed and repaired engines, brakes, suspension, and electrical systems on a five-truck commercial fleet.",
-      "Managed parts inventory and repair-cost tracking, improving expense visibility for maintenance decisions."
-    ]
+    about: "My family's trucking company, where I learned mechanical systems hands-on before I studied them.",
+    results: [
+      ["5 trucks", "in a commercial fleet: I diagnosed and repaired engines, brakes, suspension, and electrical systems, plus routine preventive maintenance"],
+      ["4+ years", "of managing parts inventory and tracking repair costs, so maintenance decisions were based on what things actually cost"]
+    ],
+    story: "One truck's lights and gauges cut out only while driving. In the shop, everything worked, and replacing parts hadn't fixed it. I flexed the wiring one connection at a time while watching the gauges and found a corroded ground that lost contact when the truck vibrated. Isolating one variable at a time is the same approach I later used to trace AI agent errors at Talky."
   }
 ];
 
 const LEADERSHIP = [
   ["Harvard Aerospace Collective & Robotics Club", "Member", "Design projects in propulsion, vehicles, and robotics."],
   ["Society of Hispanic Professional Engineers (SHPE)", "Member", "Engineering professional development."],
-  ["Harvard Latinxs in Finance and Technology (LIFT)", "Consulting Analyst", "Led deliverables for a talent-strategy engagement with Bose Corporation."],
-  ["H.O.P.E. at Colorado Academy", "Director", "Led operations for a student initiative serving more than 2,000 people each year."]
+  ["Harvard Latinxs in Finance and Technology (LIFT)", "Consulting Analyst", "Led deliverables for a talent-strategy engagement with Bose Corporation."]
 ];
 
 // ================= Helpers =================
@@ -660,7 +682,7 @@ function viewHome() {
       <div class="band-copy">
         <p class="eyebrow">Beyond the classroom</p>
         <h2>Industry, research,<br>and the shop floor<span class="dot">.</span></h2>
-        <p class="lead">My work spans engineering projects at Harvard, an AI engineering internship in Madrid, economic research at the Common Sense Institute, and four years repairing a commercial truck fleet at my family's company.</p>
+        <p class="lead">My work spans engineering projects at Harvard, an AI engineering internship in Madrid where I built a system that diagnoses AI agents' mistakes, economic research at the Common Sense Institute, and four years repairing a commercial truck fleet at my family's company.</p>
         <div><a class="ulink" href="#experience">Experience & leadership</a></div>
       </div>
       <div class="xrows">
@@ -745,7 +767,15 @@ function viewExperience() {
     <div class="xlist">
       ${EXPERIENCE.map(x => `<article class="xitem">
         <div class="when"><b>${esc(x.when)}</b><span>${esc(x.where)}</span></div>
-        <div class="body"><h3>${esc(x.role)}</h3><div class="org">${esc(x.org)}</div>${x.about ? `<p>${esc(x.about)}</p>` : ""}<ul>${x.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul></div>
+        <div class="body">
+          <h3>${esc(x.role)}</h3><div class="org">${esc(x.org)}</div>
+          <p>${esc(x.about)}</p>
+          ${x.built ? `<p class="built">${esc(x.built)}</p>` : ""}
+          <dl class="results">${x.results.map(r => `<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join("")}</dl>
+          ${x.choices ? `<div class="choices"><p class="label">Design choices</p><ul>${x.choices.map(c => `<li><strong>${esc(c[0])}</strong> ${esc(c[1])}</li>`).join("")}</ul></div>` : ""}
+          ${x.story ? `<div class="story"><p class="label">Troubleshooting story</p><p>${esc(x.story)}</p></div>` : ""}
+          ${x.tools || x.recognition ? `<p class="xfoot">${x.tools ? `<span>Tools: ${esc(x.tools)}</span>` : ""}${x.recognition ? `<span>${esc(x.recognition)}</span>` : ""}</p>` : ""}
+        </div>
       </article>`).join("")}
     </div>
     <section class="section" style="margin-top:24px">
@@ -766,7 +796,7 @@ function viewAbout() {
       <div class="prose">
         <p class="lead" style="color:var(--ink)">I'm Alejandro Miramontes Rodriguez, and I go by Alex. I'm a third-year mechanical engineering student at Harvard College, from Denver, Colorado.</p>
         <p>Before I studied engineering, I practiced it in a shop. From 2020 to 2024 I worked at A&amp;A Brothers Trucking, my family's company, diagnosing and repairing engines, brakes, suspension, and electrical systems on a five-truck fleet. Finding a fault meant testing one subsystem at a time until the problem had nowhere left to hide, and I still work that way.</p>
-        <p>At Harvard I have carried that into design: sizing gear ratios from free-body diagrams for a robot that won its tournament, refining a truss bridge through eight rounds of FEA until it held about 1,300 times its own weight, and pivoting a failing sensor project into an instrument that worked. I have also worked outside mechanical engineering, building evaluation tools for an AI finance system in Madrid and researching labor markets at the Common Sense Institute.</p>
+        <p>At Harvard I have carried that into design: sizing gear ratios from free-body diagrams for a robot that won its tournament, refining a truss bridge through eight rounds of FEA until it held about 1,300 times its own weight, and pivoting a failing sensor project into an instrument that worked. I have also worked outside mechanical engineering, building a system in Madrid that diagnoses an AI's mistakes on invoices and proposes fixes for a person to approve and researching labor markets at the Common Sense Institute.</p>
         <p>I'm looking for engineering internships where I can design, build, and test real hardware.</p>
         <div class="actions"><a class="btn dark" href="#projects">See my projects</a><a class="btn" href="${RESUME}" target="_blank" rel="noopener">Download résumé</a></div>
       </div>
@@ -776,7 +806,7 @@ function viewAbout() {
           <li>Colorado Academy<small>High school diploma, 2024</small></li>
         </ul></div>
         <div><h3>Coursework</h3><ul>
-          <li>Mechanics of Solids<small>ES 120</small></li><li>Mechanical Systems<small>ES 125</small></li><li>Systems & Control<small>ECE 155</small></li><li>Computer-Aided Machine Design<small>ES 51</small></li><li>Introduction to Electrical Engineering<small>ES 50</small></li>
+          <li>Mechanics of Solids<small>ES 120</small></li><li>Mechanical Systems<small>ES 125</small></li><li>Systems & Control<small>ECE 155</small></li><li>Machine Design (CAD)<small>ES 51</small></li><li>Introduction to Electrical Engineering<small>ES 50</small></li>
         </ul></div>
         <div><h3>Tools</h3><ul>
           <li>Engineering<small>SolidWorks, COMSOL Multiphysics (FEA), MATLAB, Instron testing, technical drawings</small></li>
