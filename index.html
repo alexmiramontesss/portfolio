@@ -406,27 +406,29 @@ const PROJECTS = [
     tools: "SolidWorks, Free-body diagrams, Torque analysis, Gear trains, Laser cutting, 3D printing, Silicone casting",
     sections: [
       ["A game played on ramps", [
-        "The ES 51 final competition, Turf Wars, put robots in an arena with 15° and 30° ramps. Teams collected blocks, balls, and hockey pucks and placed them on a central tic-tac-toe grid, and three in a row ended the match on the spot.",
-        "The 3-point hockey pucks sat at the top of the 30° ramp, so our strategy was built around climbing it reliably. The rules set hard limits: the robot had to fit in an 11 × 11 × 11 in box, use only approved lab materials, run at most six actuators with two to three screwdriver motors, and draw no more than 9 A."
+        "The ES 51 final competition, Turf Wars, put robots in an arena with 15° and 30° ramps. Teams collected blocks, balls, and hockey pucks and placed them on a central tic-tac-toe grid. Three in a row ended the match on the spot.",
+        "The highest-value pieces, 3-point hockey pucks, sat at the top of the 30° ramp. That made one question more important than any other: could our robot climb that ramp reliably? The rules boxed us in. The robot had to fit in an 11 × 11 × 11 in cube, use only approved lab materials, run at most six actuators with two to three screwdriver motors, and draw no more than 9 A in total."
       ]],
-      ["Choosing a concept", [
-        "We sketched three architectures: a three-wheel chassis, a front-bucket design, and a slanted \"tank\" chassis. We scored them in a weighted Pugh matrix. Maneuverability, deposit reliability, and simplicity of control carried the most weight, followed by climbing ability and center-of-mass stability.",
-        "The bucket design won the matrix with 15 points. Gameplay trials then changed our minds: a compact two-prong clamp was simpler to fabricate, picked pieces up faster, and was less sensitive to alignment at the grid. We switched to the clamp for the final robot."
+      ["Why we dropped our highest-scoring concept", [
+        "We sketched three architectures: a three-wheel chassis, a front-bucket design, and a slanted \"tank\" chassis. We scored them in a weighted Pugh matrix. Maneuverability, deposit reliability, and simplicity of control carried the most weight, followed by climbing and center-of-mass stability.",
+        "The bucket won with 15 points, ahead of the tank at 13 and the three-wheeler at −1. Then we played the game with it. A bucket scoops well, but dropping one piece on one specific square of the grid takes precise alignment, and the clock punished every adjustment. A compact two-prong clamp was simpler to fabricate, picked pieces up faster, and was less sensitive to alignment. We switched.",
+        "The lesson I took from this is that a Pugh matrix only scores the criteria you thought to write down. Testing showed us a cost, alignment time under pressure, that our scoring had underweighted. The matrix was a good way to start the decision, but the gameplay trials made it."
       ]],
-      ["Sizing the drivetrain and arm", [
-        "I worked from free-body diagrams of the robot on flat ground and on the 30° ramp, using the center of mass from our SolidWorks assembly. With a 2.3 kg robot, 1.5 in wheels, and a target of reaching 0.1 m/s in one second, the required torque per wheel came to about 0.22 N·m. Friction could hold about 0.39 N·m before slipping, so the wheels would grip.",
-        "That check confirmed a <strong>3:1 drive reduction</strong> was enough to climb 30° without wheel slip. For the arm, the load from the grabber and four linkages called for a <strong>10:1 reduction</strong>, which gave an arm speed of about 1.7 rad/s. The clamp servo's stall torque could grip with about 17 N, far more than the 0.2 N needed to hold a game piece."
+      ["Sizing the drivetrain before building it", [
+        "Rather than build a drivetrain and hope it climbed, I worked it out on paper first. I drew free-body diagrams of the robot on flat ground and on the 30° ramp, using the center of mass from our SolidWorks assembly. With a 2.3 kg robot, 1.5 in wheels, and a target of reaching 0.1 m/s in one second, each wheel needed about 0.22 N·m. Friction could hold about 0.39 N·m before slipping.",
+        "That margin told us two things. The wheels would grip, and a <strong>3:1 reduction</strong> was enough, so we did not need to trade away speed for torque we would never use. The same approach set the arm at a <strong>10:1 reduction</strong> for an arm speed of about 1.7 rad/s. For the clamp, the servo's stall torque could grip with about 17 N against the 0.2 N needed to hold a piece, so we left it alone instead of redesigning something that already worked."
       ]],
       ["The final robot", [
-        "Two rear-mounted screwdriver motors drive silicone-cast wheels with acrylic inserts. A wide wheelbase and a low-mounted battery keep the center of mass low on the ramps. The arm pivots on a central shaft, driven by a continuous-rotation servo through a three-pulley timing-belt system. A second servo closes the clamp, whose Ecoflex silicone pads add friction across blocks, pucks, and balls.",
-        "The finished robot measured 10.97 × 10.8 × 9.73 in, weighed 2.3 kg, used four actuators, and had a 12.8 in arm with a 6 in maximum grip."
+        "Two rear-mounted screwdriver motors drive silicone-cast wheels with acrylic inserts. A wide wheelbase and a low-mounted battery keep the center of mass low on the ramps. The arm pivots on a central shaft, driven by a continuous-rotation servo through a three-pulley timing belt. A second servo closes the clamp, and Ecoflex silicone pads add grip across blocks, pucks, and balls.",
+        "It measured 10.97 × 10.8 × 9.73 in and weighed 2.3 kg, with four actuators, a 12.8 in arm, and a 6 in maximum grip."
       ]],
-      ["Winning the tournament", [
-        "We took first place out of 16 teams. Our routine was to grab the hockey puck early, then quickly place a block or ball to complete a line, and we finished three tic-tac-toe lines across the tournament.",
-        "Two failures showed up mid-tournament. A gearbox came loose because it was not fastened securely enough, which cost us our only loss when it happened again. Inconsistent battery charging also hurt two matches. I helped fix both in the pits: we re-secured the gearbox and added voltage checks and battery rotation before every match."
+      ["What broke during the tournament", [
+        "We won first place out of 16 teams, but the robot was not flawless, and the failures taught me more than the wins. In the first match a gearbox came loose because it was not fastened securely enough. We fixed it and finished the match. When it came loose again later, it cost us our only loss.",
+        "A second problem was harder to see. Two matches went badly with no obvious mechanical fault, and we traced it to inconsistent battery charging. The robot was fine; the power going into it was not. I helped with both fixes in the pits: re-securing the gearbox, and adding a voltage check and battery rotation before every match. After that, the battery problem did not come back.",
+        "The analysis on paper was right about the drivetrain, but it said nothing about fasteners or batteries. The things that actually failed were the ones none of our calculations covered."
       ]],
-      ["What I would change", [
-        "A next version would use positive gearbox retention, such as mounting brackets or a quick-lock design, and a broader grip with better feedback on the clamp, which was our weakest point for precise placement."
+      ["The next design decision", [
+        "If I built it again, I would start with retention: mounting brackets or a quick-lock design so the gearboxes cannot work loose under load. Next would be the clamp. It gripped well, but it gave the driver no feedback, and precise placement was our weakest skill in competition. A broader grip and some way to sense a held piece would be the next things to test."
       ]]
     ],
     photos: [
@@ -459,23 +461,30 @@ const PROJECTS = [
     stats: [["20", "ADC samples averaged per reading"], ["7", "conductivity bands, mapped to notes C4–B4"], ["6", "test solutions used to validate the redesign"]],
     tools: "Arduino Uno, C++, Voltage divider design, Analog-to-digital conversion, LCD and LED interfacing, Circuit schematics",
     sections: [
-      ["Starting with solids", [
-        "We set out to build a material classifier: touch two probes to an object and sort it into low, medium, or high conductivity, the way a metal detector or diamond tester infers something from an electrical measurement.",
-        "Testing broke that idea. Readings depended on how hard the probes were pressed, how much surface they touched, whether the surface was oxidized, and the probe angle. The same object gave different readings from one test to the next. Instead of forcing an unreliable classifier, we redesigned the project around liquids. Probes surrounded by a liquid make far more consistent contact, and conductivity changes predictably as salt dissolves into ions."
+      ["The first idea did not work", [
+        "We set out to build a material classifier: touch two probes to an object and sort it into low, medium, or high conductivity, the way a metal detector or diamond tester infers something from an electrical reading.",
+        "The first prototype proved the circuit, the LCD, and the LEDs all worked. It also proved the idea did not. Readings depended on how hard the probes were pressed, how much surface they touched, whether the metal was oxidized, and the angle we held them at. The same object gave different readings from one test to the next, and different metals often gave the same reading. We were measuring our own hands as much as the material."
+      ]],
+      ["Changing the problem instead of forcing it", [
+        "We could have kept tuning thresholds and hoped the noise would average out. Instead we asked what would make the measurement repeatable. With a liquid, the probes are surrounded by the material, so contact area stops being a variable. Liquid conductivity also changes predictably: dissolve salt in water and the ions let current flow more easily.",
+        "So we kept the same electrical foundation and changed what it measured. The final device was less ambitious than \"identify any material,\" but it gave readings we could trust and explain, which mattered more for a working system."
       ]],
       ["Measuring resistance with a voltage divider", [
-        "An Arduino can only measure voltage, so the liquid between the probes becomes one half of a voltage divider. It sits in series with a known 100 Ω resistor across 5 V, and the Arduino reads the midpoint on analog pin A0. Solving the divider for the liquid's resistance gives:"
+        "An Arduino can only measure voltage, so the liquid between the probes becomes one half of a voltage divider. It sits in series with a known 100 Ω resistor across 5 V, and the Arduino reads the midpoint on pin A0. Solving the divider for the liquid's resistance gives:"
       ], `<div class="eq">R<sub>sol</sub> = R<sub>1</sub> · (V<sub>in</sub> / V<sub>out</sub>) − R<sub>1</sub>,&nbsp;&nbsp; with R<sub>1</sub> = 100 Ω and V<sub>in</sub> = 5 V</div>`],
-      ["Firmware", [
-        "Each reading averages <strong>20 samples taken 5 ms apart</strong>, which smooths out noise from probe movement, bubbles, and ripples in the liquid. An averaged value under 100 counts means no contact. Values from 100 to 520 are split into seven bands, and each band plays a note from C4 (262 Hz) to B4 (494 Hz) on a buzzer using tone().",
-        "A note only plays when the band changes, so the device behaves like an instrument rather than an alarm: dip the probes in, hear a note, add salt, and hear it climb. Red, yellow, and green LEDs on pins 8 to 10 show the conductivity range at a glance, and the 16×2 LCD shows the current note and the calculated resistance."
+      ["Making noise and numbers usable", [
+        "Raw readings jumped around with every ripple, bubble, and small movement of the probes. Each reading now averages <strong>20 samples taken 5 ms apart</strong>. Anything under 100 counts means no contact, and the range from 100 to 520 is split into seven bands, each mapped to a note from C4 (262 Hz) to B4 (494 Hz).",
+        "One small decision changed how the device felt to use. Rather than letting the buzzer play constantly like an alarm, we made it play only when the band changes, so dipping the probes in plays a note, adding salt walks the note upward, and pulling them out goes silent. The LCD and the Serial Monitor also made debugging much easier. They told us whether a problem was in the measurement or in the outputs."
       ]],
       ["My part", [
-        "I built the circuit, wrote and refined the Arduino code, calibrated the seven thresholds, and ran the system testing that validated the redesign across six test solutions. I also co-wrote the final report and helped produce the project video."
+        "I built the circuit, wrote and refined the Arduino code, calibrated the seven thresholds, and ran the testing that validated the redesign across six solutions. I also co-wrote the final report and helped produce the project video."
       ]],
-      ["Limits and next steps", [
-        "Drip Detector is not a calibrated conductivity meter. Its readings depend on probe spacing, depth, and temperature, and DC current can cause electrode effects over long tests. The 100 Ω reference also limits the range, so a 1 kΩ or 10 kΩ resistor would make it more sensitive to weak conductors.",
-        "The buzzer was too quiet for the loud design fair. A next version would add a transistor driver or speaker, a fixed probe holder for repeatable spacing, and a calibration mode that sets thresholds from air, a baseline liquid, and a strong solution."
+      ["What is still unproven", [
+        "Drip Detector is not a calibrated conductivity meter. Its readings depend on probe spacing, depth, and temperature, and the thresholds only hold for our current setup. DC current through the probes can also cause electrode effects that drift the reading over a long test.",
+        "Some limits only showed up at the design fair. The 100 Ω reference resistor makes the device least sensitive to weak conductors, where a 1 kΩ or 10 kΩ resistor would do better. And in a loud room, the buzzer was too quiet to hear."
+      ]],
+      ["The next design decision", [
+        "The first fix would be a fixed probe holder, because spacing and depth are the biggest sources of error left. After that, a calibration mode that sets the thresholds from air, a baseline liquid, and a strong solution, so the device adapts to new conditions instead of needing someone to retune the code. A transistor-driven speaker would fix the volume."
       ]]
     ],
     photos: [
@@ -498,22 +507,23 @@ const PROJECTS = [
     tools: "SolidWorks, COMSOL Multiphysics, Laser cutting, Instron testing, Hand calculations",
     sections: [
       ["The brief", [
-        "Every team got the same materials: ¼ in and ⅛ in plywood and ⅛ in acrylic. The bridge had to be 12 in long, 2 to 3.75 in wide, and no more than 8 in tall, with a clear 2 × 4 in channel through the middle for the loading car. No metal fasteners were allowed, glue could not carry load, and everything had to be cut on a laser cutter or with hand tools.",
-        "Bridges were scored on <strong>strength-to-weight ratio</strong>: the peak force a bridge survived in the Instron divided by its weight. A test ended when the bridge broke or deflected 2 in."
+        "Every team got the same materials: ¼ in and ⅛ in plywood and ⅛ in acrylic. The bridge had to be 12 in long, 2 to 3.75 in wide, and no more than 8 in tall, with a clear 2 × 4 in channel through the middle for the loading car. No metal fasteners were allowed, glue could not carry load, and every part had to come off a laser cutter or out of hand tools.",
+        "The score was the <strong>peak force divided by the bridge's weight</strong>, measured in an Instron until the bridge broke or sagged 2 in. That one rule shaped every decision. Making the bridge stronger only helped if it did not make it heavier by more."
       ]],
-      ["Materials and modeling", [
-        "The course's Instron data framed the trade-off. Plywood reached about 80 MPa along the grain at a density of about 0.7 g/cm³, while acrylic reached about 65 MPa at 1.2 g/cm³. Plywood's strength also changes with grain direction, so part orientation mattered.",
-        "We modeled every member, gusset, and joint as a SolidWorks assembly, and produced the dimensioned drawings and laser-cut profiles straight from that model, so the parts we cut matched the parts we analyzed."
+      ["Thinking in strength-to-weight", [
+        "The course's Instron data framed the materials question. Plywood reached about 80 MPa along the grain at about 0.7 g/cm³. Acrylic reached about 65 MPa at 1.2 g/cm³. Plywood gives more strength per gram, but only along the grain, so we had to think about grain direction for every part, not just its shape.",
+        "We modeled every member, gusset, and joint as a SolidWorks assembly and cut the parts straight from that model. That way the bridge we tested matched the bridge we analyzed, and any gap between prediction and result would point to the model, not to sloppy fabrication."
       ]],
       ["Eight rounds of FEA", [
-        "I ran the design through <strong>8 COMSOL FEA iterations</strong>. Each pass showed which members carried peak stress and which carried almost none. Trimming the lightly loaded members removed about 25% of the material before we cut anything, which matters directly when the score divides by weight."
+        "A first design always carries material that isn't doing much. I ran <strong>8 COMSOL FEA iterations</strong>, and each pass showed which members carried peak stress and which carried almost none. Trimming the lightly loaded members removed about <strong>25% of the material</strong> before we cut anything.",
+        "The hard part was knowing when to stop. Every member removed improves the score until the one that was quietly holding everything together goes. Iterating in software let us take those risks on a model instead of on our only bridge."
       ]],
-      ["Checking the model", [
-        "We validated the FEA against hand calculations and Instron tensile and bending tests, and the predictions matched to within 10%.",
-        "That work built on the ES 120 labs, where we tensile-tested steel, aluminum, acrylic, Delrin, and printed ABS on the Instron and compared I-beam bending measurements against COMSOL."
+      ["Trusting the model", [
+        "FEA will give you an answer for any model, including a wrong one. So we checked it against hand calculations and against Instron tensile and bending tests, and the predictions held to within 10%. That agreement is what let us trust the material cuts.",
+        "The groundwork came from the ES 120 labs, where we tensile-tested steel, aluminum, acrylic, Delrin, and printed ABS and compared measured I-beam bending against COMSOL. Those labs made it a habit to check a simulation against a physical test before trusting it."
       ]],
       ["Result", [
-        "The finished bridge weighed 85 g and held <strong>1,100 N</strong>, about 1,300 times its own weight."
+        "The finished bridge weighed 85 g and held <strong>1,100 N</strong> in the Instron, about 1,300 times its own weight."
       ]]
     ],
     photos: [
@@ -534,20 +544,22 @@ const PROJECTS = [
     tools: "Python, Flask, Jinja templates, HTML and CSS, JavaScript, Sessions, File uploads",
     sections: [
       ["The idea", [
-        "Most mornings the problem isn't owning clothes, it's seeing what goes together. Virtual Closet puts your wardrobe on screen so you can organize it, try combinations, and keep the outfits that work."
+        "Most mornings the problem isn't owning clothes. It's seeing what goes together. Virtual Closet puts your wardrobe on screen so you can sort it, try combinations, and keep the outfits that work.",
+        "My original plan was bigger. I wanted automatic clothing tagging with an image-recognition API and outfit suggestions based on the weather. The final version focused on getting the core loop working well within the semester: upload, organize, combine, save."
       ]],
       ["What it does", [
         "<strong>Accounts.</strong> Users register, log in, and log out, and each person's closet is kept separate.",
-        "<strong>Clothing upload.</strong> Upload a photo, file it under tops, bottoms, or shoes, and optionally give it a custom name so it's easy to find.",
+        "<strong>Clothing upload.</strong> Upload a photo, file it under tops, bottoms, or shoes, and optionally give it a custom name.",
         "<strong>Outfit builder.</strong> Cycle through your tops, bottoms, and shoes to see them stacked as one outfit. A random button shuffles all three for ideas.",
         "<strong>Saved outfits.</strong> Name an outfit and save it, then come back to it later or delete it.",
         "<strong>Closet management.</strong> Remove items you no longer own from the tops, bottoms, and shoes pages."
       ]],
       ["How it's built", [
-        "The back end is a Flask app with 11 routes. Each route checks the user's session before showing their closet. Uploaded images are saved into a folder per user and per category, so listing a category is just reading that folder. Pages are rendered with Jinja templates, and a small amount of JavaScript drives the cycling and random buttons in the outfit builder."
+        "The back end is a Flask app with 11 routes, and each one checks the user's session before showing anything from their closet. I chose to store uploaded images in a folder per user and per category, so listing someone's tops is just reading one folder. That kept the code simple enough for me to finish and debug. Pages are Jinja templates, and a small amount of JavaScript drives the cycling and random buttons."
       ]],
-      ["What I'd change", [
-        "To keep the scope manageable for the class, accounts and saved outfits live in memory, so they reset when the server restarts, and passwords are stored as entered. A next version would move users and outfits into a SQLite database and hash passwords with Werkzeug's built-in tools. I'd also like to add the features from my original plan: automatic clothing tagging with an image-recognition API and weather-based outfit suggestions."
+      ["What I would do differently", [
+        "Looking at the code now, the shortcuts are clear. Accounts and saved outfits live in Python dictionaries in memory, so they disappear whenever the server restarts. Passwords are stored exactly as typed. Those were fine for a class demo and are not fine for anything real.",
+        "The next version would move users and outfits into a SQLite database and hash passwords with Werkzeug's built-in tools. Then I would add the two features from my original plan, image tagging and weather-based suggestions, now that the foundation underneath them would hold."
       ]]
     ],
     photos: [
