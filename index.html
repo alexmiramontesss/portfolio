@@ -488,10 +488,11 @@ const PROJECTS = [
   },
   {
     id: "truss-bridge", title: "Truss bridge design & FEA", category: "Structures", year: "2026", date: "Spring 2026",
-    course: "ES 120 · Mechanics of Solids", draw: "bridge",
-    coverCaption: "Load path through the truss. The highlighted members carried the most stress in FEA.",
+    course: "ES 120 · Mechanics of Solids",
+    cover: "bridge-buckling-bad.jpg", fit: "cover", coverAlt: "The finished laser-cut plywood bridge, an arched deck with triangulated side panels, signed by team Buckling Bad.",
+    coverCaption: "The finished bridge from team Buckling Bad: a plywood deck over triangulated, arched side panels.",
     summary: "An 85 g plywood and acrylic truss bridge that held 1,100 N in the Instron, about 1,300 times its own weight, refined through eight rounds of FEA.",
-    role: "Team project. CAD, COMSOL FEA, fabrication, and validation testing.",
+    role: "Team of three (Buckling Bad). CAD, COMSOL FEA, fabrication, and validation testing.",
     status: "Built and load-tested in the ES 120 bridge competition, May 2026.",
     stats: [["1,100 N", "peak load held in the Instron"], ["≈1,300×", "its own 85 g weight"], ["≈25%", "material removed through 8 FEA iterations"]],
     tools: "SolidWorks, COMSOL Multiphysics, Laser cutting, Instron testing, Hand calculations",
@@ -509,65 +510,16 @@ const PROJECTS = [
       ]],
       ["Checking the model", [
         "We validated the FEA against hand calculations and Instron tensile and bending tests, and the predictions matched to within 10%.",
-        "That work built on the ES 120 labs, where we tensile-tested steel, aluminum, acrylic, Delrin, and printed ABS on the Instron and compared I-beam bending measurements against COMSOL. I also ran a separate COMSOL study on when linear elasticity holds."
+        "That work built on the ES 120 labs, where we tensile-tested steel, aluminum, acrylic, Delrin, and printed ABS on the Instron and compared I-beam bending measurements against COMSOL."
       ]],
       ["Result", [
         "The finished bridge weighed 85 g and held <strong>1,100 N</strong>, about 1,300 times its own weight."
       ]]
     ],
-    photos: []
-  },
-  {
-    id: "egg-drop-suspension", title: "Egg drop suspension system", category: "Mechanical systems", year: "2026", date: "Fall 2026",
-    course: "ES 125 · Mechanical Systems", draw: "eggdrop", live: true,
-    coverCaption: "The problem as a mass-spring-damper system: a 1,050 g carriage on rails, falling 5 to 20 ft.",
-    summary: "An ongoing team design for a shock-absorbing landing system that keeps an egg intact through drops of up to 20 ft, built from RC-car shocks and plywood.",
-    role: "Team project. Design, analysis, and fabrication.",
-    status: "In design. CAD due Dec 1, competition Dec 9, 2026.",
-    stats: [["5–20 ft", "allowed drop heights"], ["12", "RC-car shocks to work with"], ["≈1.3 in", "of travel per shock"]],
-    tools: "Mass-spring-damper modeling, SolidWorks, Laser cutting, Spring and damper selection",
-    sections: [
-      ["The challenge", [
-        "An egg rides in a 1,050 g drop carriage that slides down vertical rails. With nothing underneath it, the carriage is in free fall. Our job is to design the suspension that bolts under the carriage's team plate and keeps the egg from cracking.",
-        "The kit is fixed: 12 Traxxas T-Maxx big-bore shocks, one spring per shock from a progressive spring set, silicone shock oil in 20, 40, and 60 weight, plywood, and ¼-20 hardware. The device has to fit between the rails, stay under 48 in tall and 36 in wide, and survive up to three drops with no repairs."
-      ]],
-      ["How it is scored", [
-        "Each drop is scored on drop height and on how low the device keeps peak acceleration, mass, and height compared with the rest of the field. A cracked egg scores zero for that drop. A wireless data acquisition system records the peak acceleration of every drop."
-      ]],
-      ["The engineering problem", [
-        "For an undamped spring, peak acceleration happens at maximum compression, so a very soft spring with long travel would be ideal. Our shocks only travel about 1.3 in, so the design has to balance stiffness, damping, and geometry. Damping removes energy so the carriage doesn't bounce, and angling or linking the shocks changes the effective spring constant and damping coefficient of the device as a whole. Those effective values are what we have to predict and present."
-      ]],
-      ["Where it stands", [
-        "We are choosing between candidate designs now. The CAD and design write-up are due December 1, and the drop competition is December 9, 2026. I will add the analysis, build photos, and drop results here after the competition."
-      ]]
-    ],
-    photos: []
-  },
-  {
-    id: "elasticity-fea-study", title: "Elasticity assumptions in COMSOL", category: "Analysis", year: "2026", date: "Spring 2026",
-    course: "ES 120 · Mechanics of Solids", draw: "comsol",
-    coverCaption: "A steel bar fixed at one end and pulled with 1,000 N, colored by von Mises stress.",
-    summary: "A finite element study that tests two assumptions behind everyday hand calculations: that linear elasticity holds, and that St. Venant's principle smooths out how a load is applied.",
-    role: "Individual project.",
-    status: "Complete.",
-    stats: [["< 3.1%", "gap between linear and nonlinear models at 1,000 N"], ["44 MPa", "peak stress, well below steel's ~250 MPa yield"], ["3", "statically equivalent load cases compared"]],
-    tools: "COMSOL Multiphysics, Linear and geometrically nonlinear solid mechanics, Mesh-based stress analysis",
-    sections: [
-      ["Why test assumptions", [
-        "Most hand calculations in solid mechanics rest on two simplifications. Linear elasticity assumes deformations are small enough to ignore geometric nonlinearity. St. Venant's principle says that, far enough from a load, it doesn't matter exactly how that load is applied. I used COMSOL to check whether both hold for a simple loaded bar."
-      ]],
-      ["Linear vs. nonlinear", [
-        "I modeled a 300 × 4 × 4 mm structural steel bar (E = 200 GPa, ν = 0.3), fixed at one end, under axial loads from 100 N to 1,000 N. I solved each load case with both linear and geometrically nonlinear solid mechanics and compared the tip displacement.",
-        "The two models stayed within about 3% of each other across the full range. Peak von Mises stress at 1,000 N was about 44 MPa, far below steel's yield strength of about 250 MPa, so the bar stayed in the small-deformation regime where the linear model is accurate."
-      ]],
-      ["St. Venant's principle", [
-        "I applied the same 1,000 N resultant three ways: across the full end face, across half of it, and on a small patch. Near the loaded end the stress fields looked very different, and the patch load produced a clear hot spot. Farther along the bar, all three converged to the same nearly uniform stress."
-      ]],
-      ["Why it matters", [
-        "Both assumptions held for these loads. That gave me confidence to use hand calculations as a check on FEA, which is exactly how I validated the truss bridge model later that semester."
-      ]]
-    ],
-    photos: []
+    photos: [
+      ["bridge-buckling-bad.jpg", "The finished bridge before testing."],
+      ["bridge-full.jpg", "The bridge in the shop, signed by the team."]
+    ]
   },
   {
     id: "virtual-closet", title: "Virtual Closet web app", category: "Software", year: "2024", date: "Fall 2024",
