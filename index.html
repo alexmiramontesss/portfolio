@@ -225,6 +225,18 @@ h1, h2, h3 { margin: 0; font-weight: 650; text-wrap: balance; color: var(--ink);
 .photo:hover .media { box-shadow: inset 0 0 0 1px var(--line); }
 .photo span { font-size: 12px; font-style: italic; color: var(--muted); line-height: 1.5; }
 
+/* ---------- Video ---------- */
+.video { padding-block: 56px 8px; display: grid; gap: 20px; }
+.vcard { display: grid; gap: 10px; max-width: 520px; }
+.vthumb { aspect-ratio: 16 / 9; border-radius: var(--radius); background: var(--ink); display: grid; place-items: center; position: relative; overflow: hidden; }
+.vthumb .play { width: 68px; height: 48px; border-radius: 12px; background: #e62117; display: grid; place-items: center; }
+.vthumb .play::after { content: ""; border-left: 18px solid #ffffff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
+.vthumb .tag { position: absolute; left: 14px; bottom: 12px; font-size: 11px; font-weight: 600; color: #ffffff; opacity: .85; }
+.vcard:hover .vthumb { background: var(--blue); }
+.vrow { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.vrow b { font-weight: 600; }
+.vrow span { color: var(--muted); font-size: 12px; }
+
 /* ---------- Lightbox ---------- */
 .lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(15, 20, 28, 0.92); display: grid; grid-template-rows: auto 1fr auto; padding: calc(env(safe-area-inset-top, 0px) + 14px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 18px) max(16px, env(safe-area-inset-left, 0px)); color: var(--white); }
 .lb-top { display: flex; justify-content: flex-end; gap: 10px; }
@@ -425,9 +437,12 @@ const PROJECTS = [
       ["robot-clamp.jpg", "The clamp with silicone inserts and its servo housing."],
       ["robot-exploded-cad.jpg", "Exploded SolidWorks view of the drivetrain, arm, and clamp."],
       ["robot-drawing-claw.jpg", "Dimensioned drawing of the claw."],
+      ["robot-drawing-clamp-case.jpg", "Dimensioned drawing of the clamp servo case."],
+      ["robot-drawing-arm-linkage.jpg", "Dimensioned drawing of an arm linkage."],
       ["robot-fbd-ramp.jpg", "Free-body diagram on the ramp, with the SolidWorks center of mass."],
       ["robot-fbd-flat.jpg", "Free-body diagram on flat ground."],
       ["robot-calcs.jpg", "Torque and clamp-force calculations."],
+      ["robot-calcs-2.jpg", "Grabber speed and arm gear-ratio calculations."],
       ["robot-pugh-matrix.jpg", "Weighted Pugh matrix comparing the three concepts."],
       ["robot-sketch-tank.jpg", "Concept sketch of the slanted tank chassis."],
       ["robot-sketch-bucket.jpg", "Concept sketch of the front-bucket design."]
@@ -466,7 +481,9 @@ const PROJECTS = [
     photos: [
       ["drip-team-fair.jpg", "Our team at the ES 50 design fair. Each cup is a test solution labeled with the note it plays."],
       ["drip-schematic.jpg", "Full circuit schematic."],
-      ["drip-block-diagram.jpg", "Block diagram from liquid sample to LCD, LEDs, and buzzer."]
+      ["drip-block-diagram.jpg", "Block diagram from liquid sample to LCD, LEDs, and buzzer."],
+      ["drip-code-1.jpg", "Arduino code, part 1: averaging, band mapping, and resistance calculation."],
+      ["drip-code-2.jpg", "Arduino code, part 2: LEDs, note labels, buzzer, and LCD output."]
     ]
   },
   {
@@ -553,23 +570,40 @@ const PROJECTS = [
     photos: []
   },
   {
-    id: "virtual-wardrobe", title: "Virtual wardrobe web app", category: "Software", year: "2024", date: "Fall 2024",
-    course: "CS50 · Introduction to Computer Science", draw: "wardrobe",
-    coverCaption: "Users catalog clothing items and assemble them into outfits.",
-    summary: "A full-stack Python and Flask web app for cataloging clothes and putting outfits together, with secure accounts and structured data storage.",
+    id: "virtual-closet", title: "Virtual Closet web app", category: "Software", year: "2024", date: "Fall 2024",
+    course: "CS50 · Introduction to Computer Science",
+    cover: "closet-outfit-builder.jpg", coverAlt: "The outfit builder page, showing a jacket, camo pants, and sneakers stacked into one outfit.",
+    coverCaption: "The outfit builder: cycle through your own tops, bottoms, and shoes, or hit random.",
+    video: { url: "https://www.youtube.com/watch?v=Mn1xGVoMCi0", title: "Virtual Closet demo" },
+    summary: "A Python and Flask web app where you upload photos of your clothes, sort them into tops, bottoms, and shoes, and mix them into outfits you can save for later.",
     role: "Independent final project.",
-    status: "Complete.",
-    stats: [],
-    tools: "Python, Flask, SQL, HTML and CSS, User authentication",
+    status: "Complete. Presented December 8, 2024.",
+    stats: [["11", "Flask routes, from login to outfit saving"], ["3", "clothing categories: tops, bottoms, shoes"], ["≈1,300", "lines of Python, HTML, CSS, and JavaScript"]],
+    tools: "Python, Flask, Jinja templates, HTML and CSS, JavaScript, Sessions, File uploads",
     sections: [
       ["The idea", [
-        "A place to keep track of the clothes you own and plan outfits without digging through a closet."
+        "Most mornings the problem isn't owning clothes, it's seeing what goes together. Virtual Closet puts your wardrobe on screen so you can organize it, try combinations, and keep the outfits that work."
       ]],
-      ["How it works", [
-        "Users create an account and log in securely, add clothing items, and assemble them into outfits. The app is built in Python with Flask, with a database behind it that stores each user's items and outfits."
+      ["What it does", [
+        "<strong>Accounts.</strong> Users register, log in, and log out, and each person's closet is kept separate.",
+        "<strong>Clothing upload.</strong> Upload a photo, file it under tops, bottoms, or shoes, and optionally give it a custom name so it's easy to find.",
+        "<strong>Outfit builder.</strong> Cycle through your tops, bottoms, and shoes to see them stacked as one outfit. A random button shuffles all three for ideas.",
+        "<strong>Saved outfits.</strong> Name an outfit and save it, then come back to it later or delete it.",
+        "<strong>Closet management.</strong> Remove items you no longer own from the tops, bottoms, and shoes pages."
+      ]],
+      ["How it's built", [
+        "The back end is a Flask app with 11 routes. Each route checks the user's session before showing their closet. Uploaded images are saved into a folder per user and per category, so listing a category is just reading that folder. Pages are rendered with Jinja templates, and a small amount of JavaScript drives the cycling and random buttons in the outfit builder."
+      ]],
+      ["What I'd change", [
+        "To keep the scope manageable for the class, accounts and saved outfits live in memory, so they reset when the server restarts, and passwords are stored as entered. A next version would move users and outfits into a SQLite database and hash passwords with Werkzeug's built-in tools. I'd also like to add the features from my original plan: automatic clothing tagging with an image-recognition API and weather-based outfit suggestions."
       ]]
     ],
-    photos: []
+    photos: [
+      ["closet-outfit-builder.jpg", "Outfit builder with a top, bottom, and shoes selected."],
+      ["closet-saved-outfits.jpg", "Saved outfits, each with its own name and a delete button."],
+      ["closet-upload.jpg", "Upload page: choose a photo, pick a category, and add an optional name."],
+      ["closet-login.jpg", "Login page with session messages."]
+    ]
   }
 ];
 
@@ -693,7 +727,7 @@ function viewProject(p) {
   const idx = PROJECTS.indexOf(p);
   const next = PROJECTS[(idx + 1) % PROJECTS.length];
   const hasPhotos = p.photos.length > 0;
-  const jumps = `<button type="button" data-jump="sec-0">Read the project ↓</button>` + (hasPhotos ? `<button type="button" data-jump="photos">View photos ↓</button>` : "");
+  const jumps = `<button type="button" data-jump="sec-0">Read the project ↓</button>` + (p.video ? `<button type="button" data-jump="video">Watch video ↓</button>` : "") + (hasPhotos ? `<button type="button" data-jump="photos">View photos ↓</button>` : "");
   return `
   <div class="wrap">
     <div class="crumb"><a href="#projects">All projects</a><span>/</span>${esc(p.title)}</div>
@@ -713,6 +747,9 @@ function viewProject(p) {
       <figure class="lead-fig">${media(p, "lead")}<figcaption>${esc(p.coverCaption || "")}</figcaption></figure>
     </div>
     ${p.stats.length ? `<div class="stats">${p.stats.map(s => `<div class="stat"><b>${esc(s[0])}</b><span>${esc(s[1])}</span></div>`).join("")}</div>` : ""}
+    ${p.video ? `<section class="video" id="video"><div><p class="eyebrow">Project video</p></div>
+      <a class="vcard" href="${p.video.url}" target="_blank" rel="noopener"><div class="vthumb"><span class="play" aria-hidden="true"></span><span class="tag">YouTube</span></div>
+      <div class="vrow"><b>${esc(p.video.title)}</b><span>Watch on YouTube ↗</span></div></a></section>` : ""}
     <div class="p-body">
       <aside class="side">
         <div><p class="label">In this project</p><nav class="toc" aria-label="In this project">${p.sections.map((s, i) => `<button type="button" data-jump="sec-${i}">${esc(s[0])}</button>`).join("")}${hasPhotos ? `<button type="button" data-jump="photos">Photos & drawings</button>` : ""}</nav></div>
